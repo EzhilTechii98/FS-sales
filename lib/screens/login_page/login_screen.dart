@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
               FloatingActionButtonLocation.centerFloat,
               floatingActionButton: Container(
                 height: 50,
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(20),
                 child: ElevatedButton(
 
                   onPressed: () {
