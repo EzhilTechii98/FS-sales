@@ -54,7 +54,7 @@ class _MyAppState extends CoreWidgetsState<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: ColorResource.color954535,
+      statusBarColor: Colors.grey,
       statusBarIconBrightness: Brightness.light, // For Android (dark icons)
       statusBarBrightness: Brightness.light,
     ));

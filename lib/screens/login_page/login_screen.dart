@@ -1,3 +1,6 @@
+import 'package:dms_dealers/utils/app_utils.dart';
+import 'package:dms_dealers/utils/custom_textForm_field.dart';
+import 'package:dms_dealers/utils/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../base/base_state.dart';
 import '../../router.dart';
+import '../../utils/appBar.dart';
 import '../../utils/color_resources.dart';
 import 'login_bloc.dart';
 
@@ -49,33 +53,25 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             } else if (state is SuccessState) {}
             return Scaffold(
-              appBar: AppBar(
-                title: const Text(
-                  'Login Screen',
-                  style: TextStyle(color: Colors.white),
-                ),
-                backgroundColor: Colors.purple,
+              appBar:  CustomAppBar(title: 'LoginPage', actions: [],
               ),
               body: Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[_loginFormFields()],
-                  ),
+                child: Column(
+                  children: <Widget>[_loginFormFields()],
                 ),
               ),
               floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
+
               floatingActionButton: Container(
                 height: 50,
-                margin: const EdgeInsets.all(20),
+                margin: const EdgeInsets.all(10),
                 child: ElevatedButton(
-
                   onPressed: () {
-                    Fluttertoast.showToast(msg: 'Work in progress'
-
-                    );
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, AppRoutes.dashboardScreen);
+                    }
                   },
                   child: const Center(
                     child: Text('Login'),
@@ -93,84 +89,91 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Center(child: Image.asset("assets/png/flyerss.png")),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Align(
-              alignment: Alignment.bottomLeft,
-              child: Text('Login',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w500,
-                color: Colors.black
-              ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Enter Email",
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(),
+        Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.bottomLeft,
+                child: Text('Login',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(),
-                ),
-                //fillColor: Colors.green
               ),
-              validator: (String? val) {
-                if (val!.isEmpty) {
-                  return "Email cannot be empty";
-                } else {
-                  return null;
-                }
-              },
-              keyboardType: TextInputType.emailAddress,
-              style: const TextStyle(
-                fontFamily: "Poppins",
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(height: 20,),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: "Enter Password",
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(),
+              CustomTextForm(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                hintText: "Enter your emaiId ",
+                labelText: "Enter EmailId",
+                validator: (String? val) {
+                  if (val!.isEmpty) {
+                    return "please enter valid email";
+                  } else {
+                    return null;
+                  }
+                },
+                errorStyle: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 12.0,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
-                  borderSide: new BorderSide(),
-                ),
-                //fillColor: Colors.green
               ),
-              validator: (String? val) {
-                if (val!.isEmpty) {
-                  return "Email cannot be empty";
-                } else {
-                  return null;
-                }
-              },
-              keyboardType: TextInputType.emailAddress,
-              style: const TextStyle(
-                fontFamily: "Poppins",
-              ),
-            ),
-          ],
+              // TextFormField(
+              //   autovalidateMode: AutovalidateMode.onUserInteraction,
+              //   decoration: InputDecoration(
+              //     labelText: "Enter Email",
+              //     fillColor: Colors.white,
+              //     border: OutlineInputBorder(
+              //       borderRadius: new BorderRadius.circular(10.0),
+              //       borderSide: new BorderSide(),
+              //     ),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderRadius: new BorderRadius.circular(10.0),
+              //       borderSide: new BorderSide(),
+              //     ),
+              //     enabledBorder: OutlineInputBorder(
+              //       borderRadius: new BorderRadius.circular(10.0),
+              //       borderSide: new BorderSide(),
+              //     ),
+              //     //fillColor: Colors.green
+              //   ),
+              //   validator: (String? val) {
+              //     if (val!.isEmpty) {
+              //       return "Email cannot be empty";
+              //     } else {
+              //       return null;
+              //     }
+              //   },
+              //   keyboardType: TextInputType.emailAddress,
+              //   style: const TextStyle(
+              //     fontFamily: "Poppins",
+              //   ),
+              // ),
+
+              CustomTextForm(
+                errorStyle: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 12.0,
+                ),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                  hintText: "Enter your password ",
+                  labelText: "Enter password",
+                  validator: (String? val) {
+                    if (val!.isEmpty) {
+                      return "please enter the passwork";
+                    } else if(val!.length < 6) {
+                      return "password must contain 6 character and above";
+                    }
+                  },
+              )
+              // ),
+            ],
+          ),
         )
       ],
     );

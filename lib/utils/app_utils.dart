@@ -81,3 +81,23 @@ class AppUtils {
   }
 }
 
+class CustomTextStyle extends StatelessWidget {
+  final String text;
+
+  const CustomTextStyle({
+    Key? key,
+    required this.text,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: const TextStyle(
+        color: Colors.black, // Customize color here
+        fontSize: 16.0, // Customize font size here
+        fontWeight: FontWeight.bold, // Customize font weight here
+      ),
+    );
+  }
+}

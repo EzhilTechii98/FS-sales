@@ -6,22 +6,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
 import '../../utils/color_resources.dart';
-import 'sample_bloc.dart';
+import 'unallocated_bloc.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+class UnAllocatedScreen extends StatefulWidget {
+  const UnAllocatedScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  _UnAllocatedScreenState createState() => _UnAllocatedScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  late OTPBloc bloc;
+class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
+  late UnAllocatedBloc bloc;
 
   @override
   void initState() {
     super.initState();
-    bloc = BlocProvider.of<OTPBloc>(context);
+    bloc = BlocProvider.of<UnAllocatedBloc>(context);
 
   }
 
@@ -50,13 +50,11 @@ class _SplashScreenState extends State<SplashScreen> {
                     )),
                 body:
                 Center(
-                  child:
-                  Column(
-
+                  child: Column(
                     children: [
                       Container(
                         padding: const EdgeInsets.all(50),
-                        child: const Text('  READ', style: TextStyle(fontSize: 25, color: Colors.black),),
+                        child: const Text('  unallocated', style: TextStyle(fontSize: 25, color: Colors.black),),
                       ),
 
                     ],

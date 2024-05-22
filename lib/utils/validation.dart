@@ -5,6 +5,7 @@ class Validator {
     r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",
   );
 
+
   static ValidationState validate(String input,
       {required List<String> rules, String? fieldName, int? lengthOfInput}) {
     for (int i = 0; i < rules.length; i++) {
@@ -225,6 +226,7 @@ class Validator {
 
     return ValidationState(status: true);
   }
+
   static ValidationState newPassword(
       String currentPassword, String newPassword) {
     const String pattern =

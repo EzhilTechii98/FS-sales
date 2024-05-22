@@ -98,13 +98,6 @@ class AppThemes {
         color: ColorResource.color767C86,
       ),
 
-      //Used for emphasizing text and font size of 18,20,22//hintText
-      bodyLarge: base.bodyLarge!.copyWith(
-          fontFamily: 'Poppins-Regular',
-          fontSize: 14.0,
-          color: ColorResource.color414A58
-      ),
-
       //Used for large text in dialogs and font size of 24
       displayLarge: base.displayLarge!.copyWith(
           fontFamily: 'Poppins-Medium',
