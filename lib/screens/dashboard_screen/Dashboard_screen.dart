@@ -63,10 +63,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           child: Card(
                             elevation: 2,
                             child: Container(
-                              padding: EdgeInsets.all(20),
+                              padding: const EdgeInsets.all(20),
                               height: 70,
                               width: MediaQuery.of(context).size.width,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   Icon(Icons.group),
@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                                   Text("20")
                                 ],
-                              ) ,
+                              ),
                             ),
                           ),
                         ),
@@ -97,7 +97,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
                                   Text('Projects'),
 
-                                  Text("20")
+                                  Text( "20")
                                 ],
                               ) ,
                             ),

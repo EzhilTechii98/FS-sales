@@ -94,9 +94,9 @@ class CustomTextStyle extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(
-        color: Colors.black, // Customize color here
-        fontSize: 16.0, // Customize font size here
-        fontWeight: FontWeight.bold, // Customize font weight here
+        fontFamily: 'Palanquin-Medium',
+        color: ColorResource.color0E0D0E, // Customize color here
+        fontSize: 17.0,
       ),
     );
   }

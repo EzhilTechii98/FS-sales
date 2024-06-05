@@ -86,8 +86,18 @@ flutter:
     - family: Poppins
       fonts:
         - asset: assets/fonts/Poppins-Regular.ttf
-          weight: 400
         - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 600
-        - asset: assets/fonts/Poppins-Italic.ttf
-          style: italic
+    - family: Palanquin
+      fonts:
+        - asset: assets/fonts/Palanquin-Bold.ttf
+        - asset: assets/fonts/Palanquin-Light.ttf
+        - asset: assets/fonts/Palanquin-Medium.ttf
+        - asset: assets/fonts/Palanquin-Regular.ttf
+        - asset: assets/fonts/Palanquin-SemiBold.ttf
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Black.ttf
+        - asset: assets/fonts/Lato-Bold.ttf
+        - asset: assets/fonts/Lato-Light.ttf
+        - asset: assets/fonts/Lato-Thin.ttf
+        - asset: assets/fonts/Lato-Regular.ttf

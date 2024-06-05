@@ -1,11 +1,9 @@
-
-
-import 'package:dms_dealers/utils/appBar.dart';
 import 'package:dms_dealers/utils/app_utils.dart';
-import 'package:dms_dealers/utils/custom_bottom_sheet.dart';
 import 'package:dms_dealers/utils/custom_textForm_field.dart';
+import 'package:dms_dealers/utils/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
@@ -22,12 +20,27 @@ class EmployeeDetailsScreen extends StatefulWidget {
 
 class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   late EmployeeDetailsBloc bloc;
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController employeeNameController = TextEditingController();
+  TextEditingController emailAddressController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController teamController = TextEditingController();
+  TextEditingController designationController = TextEditingController();
+  TextEditingController projectManagerController = TextEditingController();
+  TextEditingController industryController = TextEditingController();
+  TextEditingController technologyController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+
     bloc = BlocProvider.of<EmployeeDetailsBloc>(context);
 
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -47,156 +60,139 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
             }
             return  SafeArea(
               child: Scaffold(
-                appBar: CustomAppBar(
-                  title: "Employee Details",
-                  actions: const [
-
-                    Icon(Icons.edit_rounded),
-                    SizedBox(width: 20,),
-                  ],
-                ),
-                body:  SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
+                body:  Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // employee name
-                        CustomTextStyle(text: 'Employee Name'),
-                        CustomTextForm(
-                          hintText: '',
-                          labelText: '',
-                        ),
-
-                        // email address
-                        CustomTextStyle(text: 'Email Address'),
-                        CustomTextForm(
-                          hintText: '',
-                          labelText: '',
-
-                        ),
-
-                        //phone number
-                        CustomTextStyle(text: 'Phone Number'),
-                        CustomTextForm(
-                          keyboardType: TextInputType.number,
-                          hintText: '',
-                          labelText: '',
-
-                        ),
-
-                        // team
-                        CustomTextStyle(text: 'Team'),
-                        CustomTextForm(
-                          hintText: '',
-                          labelText: '',
-
-                        ),
-
-                        //Designation
-                        CustomTextStyle(text: 'Designation'),
-                        CustomTextForm(
-                          hintText: '',
-                          labelText: '',
-                        ),
-
-                        //Reporting manager
-                        CustomTextStyle(text: 'Reporting manager'),
-                        CustomTextForm(
-                          hintText: '',
-                          labelText: '',
-                        ),
-                        //industry
-
-                        CustomButton(
-                          text: 'Select Industry',
-                          onPressed: () {
-                            final List<String> dynamicData = ['Item 1', 'Item 2', 'Item 3']; // Your dynamic data here
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomBottomSheet(data: dynamicData);
-                              },
-                            );
-                            print('Button clicked');
-                          },
-                          buttonColor: Colors.purple,
-                          // Customize button color
-                          textColor: Colors.white,
-                          // Customize text color
-                          fontSize: 14.0, // Customize font size
-                        ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Chip(
-                          label: Text('Health'),
-                          backgroundColor: Colors.deepOrangeAccent.shade100,
-                        ),
-                        SizedBox(width: 10), // Space between the chips
-                        Chip(
-                          label: Text('Manufacture'),
-                          backgroundColor: Colors.deepOrangeAccent.shade100,
-                        ),
-                      ],
-                    ),
-
-                        //Technology
-                        CustomButton(
-                          text: 'Select Technology',
-                          onPressed: () {
-                            final List<String> dynamicData = ['Item 1', 'Item 2', 'Item 3']; // Your dynamic data here
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomBottomSheet(data: dynamicData);
-                              },
-                            );
-                            print('Button clicked');
-                          },
-                          buttonColor: Colors.purple,
-                          // Customize button color
-                          textColor: Colors.white,
-                          // Customize text color
-                          fontSize: 14.0, // Customize font size
-                        ),
-
+                        const SizedBox(height: 20,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Chip(
-                              label: Text('Android'),
-                              backgroundColor: Colors.greenAccent.shade200,
-                            ),
-                            SizedBox(width: 10), // Space between the chips
-                            Chip(
-                              label: Text('ios'),
-                              backgroundColor: Colors.greenAccent.shade200,
-                            ),
+                            const SizedBox(height: 20,),
+                            const Icon(Icons.arrow_back),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Back'),
+                            )
                           ],
                         ),
-
-                        SizedBox(height: 20,),
-
-                        CustomButton(
-                          text: 'Update',
-                          onPressed: () {
-                            final List<String> dynamicData = ['Item 1', 'Item 2', 'Item 3']; // Your dynamic data here
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomBottomSheet(data: dynamicData);
-                              },
-                            );
-                            print('Button clicked');
-                          },
-                          buttonColor: Colors.purple,
-                          // Customize button color
-                          textColor: Colors.white,
-                          // Customize text color
-                          fontSize: 14.0, // Customize font size
+                        const SizedBox(height: 8,),
+                        const Text('Employee Details',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: 'Palanquin-Bold',
+                              color: ColorResource.color171717),
                         ),
+                        SizedBox(height: 10,),
+
+                        Expanded(
+                          child: Form(
+                            key: _formKey,
+                            child: ListView(
+                              children:  [
+
+                                const CustomTextStyle(text: 'Employee Name'),
+                                CustomTextForm(
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: employeeNameController,
+                                  validator: InputValidator.firstName,
+
+                                ),
+
+                                //Industry
+                                const CustomTextStyle(text: 'Email Address'),
+                                CustomTextForm(
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: emailAddressController,
+                                  validator: InputValidator.email,
+
+                                ),
+
+                                //Technology
+                                const CustomTextStyle(text: 'Phone Number'),
+                                CustomTextForm(
+                                  keyboardType: TextInputType.number,
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: phoneNumberController,
+                                  validator: InputValidator.phoneNumber,
+
+                                ),
+
+                                const CustomTextStyle(text: 'Team'),
+                                CustomTextForm(
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: teamController,
+                                  suffixIcon: Icon(Icons.keyboard_arrow_down),
+
+                                ),
+
+                                const CustomTextStyle(text: 'Designation'),
+                                CustomTextForm(
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: designationController,
+                                  suffixIcon: const Icon(Icons.keyboard_arrow_down),
+
+                                ),
+
+                                const CustomTextStyle(text: 'Project Manager'),
+                                CustomTextForm(
+                                  hintText: '',
+                                  labelText: '',
+                                  validator: InputValidator.projectManager,
+                                  controller: projectManagerController,
+                                  // suffixIcon: Icon(Icons.keyboard_arrow_down),
+
+                                ),
+
+                                const CustomTextStyle(text: 'Industry'),
+                                CustomTextForm(
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: industryController,
+                                  suffixIcon: const Icon(Icons.keyboard_arrow_down),
+                                  validator: InputValidator.industry,
+
+                                ),
+
+                                const CustomTextStyle(text: 'Technology'),
+                                CustomTextForm(
+                                  hintText: '',
+                                  labelText: '',
+                                  controller: technologyController,
+                                  suffixIcon: const Icon(Icons.keyboard_arrow_down),
+
+                                ),
+
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        Align(
+                          alignment: Alignment.center,
+                            child: CustomButton(
+                              onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              print('new');
+                            }
+                            // Add your button onPressed logic here
+                              },
+                              text: 'Update',
+                            ),
+                        )
+
 
                       ],
                     ),

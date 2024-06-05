@@ -1,3 +1,6 @@
+import 'package:dms_dealers/screens/add_project_screen/add_project_bloc.dart';
+import 'package:dms_dealers/screens/add_project_screen/add_project_event.dart';
+import 'package:dms_dealers/screens/add_project_screen/add_project_screen.dart';
 import 'package:dms_dealers/screens/allocated_resources/allocated_bloc.dart';
 import 'package:dms_dealers/screens/allocated_resources/allocated_event.dart';
 import 'package:dms_dealers/screens/allocated_resources/allocated_screen.dart';
@@ -16,6 +19,9 @@ import 'package:dms_dealers/screens/login_page/login_screen.dart';
 import 'package:dms_dealers/screens/projects/projects_bloc.dart';
 import 'package:dms_dealers/screens/projects/projects_event.dart';
 import 'package:dms_dealers/screens/projects/projects_screen.dart';
+import 'package:dms_dealers/screens/resources_allocation_screen/res_allocation_bloc.dart';
+import 'package:dms_dealers/screens/resources_allocation_screen/res_allocation_event.dart';
+import 'package:dms_dealers/screens/resources_allocation_screen/res_allocation_screen.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_bloc.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_event.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_screen.dart';
@@ -34,6 +40,8 @@ class AppRoutes {
   static const String allocated = 'allocated';
   static const String unallocated = 'unallocated';
   static const String employeeDetails = 'employeeDetails';
+  static const String addProjectsScreen = 'addProjectsScreen';
+  static const String resourcesAllocationScreen = 'resourcesAllocationScreen';
 }
 
 Route<dynamic>? getRoute(RouteSettings settings) {
@@ -52,6 +60,11 @@ Route<dynamic>? getRoute(RouteSettings settings) {
       return _buildUnAllocated();
     case AppRoutes.employeeDetails:
       return _buildEmployeeDetails();
+    case AppRoutes.addProjectsScreen:
+      return _buildAddProjectsScreen();
+    case AppRoutes.resourcesAllocationScreen:
+      return _buildResourcesAllocationScreen();
+
   }
   return null;
 }
@@ -85,7 +98,15 @@ Route<dynamic> _buildEmployeeDetails() {
   return MaterialPageRoute(
       builder: (BuildContext context) => PageBuilder.buildEmployeeDetails());
 }
-
+Route<dynamic> _buildAddProjectsScreen() {
+  return MaterialPageRoute(
+      builder: (BuildContext context) => PageBuilder.buildAddProjectsScreen());
+}
+Route<dynamic> _buildResourcesAllocationScreen() {
+  return MaterialPageRoute(
+      builder: (BuildContext context) => PageBuilder.buildResourcesAllocationScreen());
+}
+//_buildResourcesAllocationScreen
 
 class PageBuilder {
   static Widget buildLoginScreen() {
@@ -135,6 +156,20 @@ class PageBuilder {
         create: (BuildContext context) => EmployeeDetailsBloc()
           ..add(EmployeeDetailsInitialEvent(context: context)),
         child: const EmployeeDetailsScreen());
+  }
+
+  static Widget buildAddProjectsScreen() {
+    return BlocProvider(
+        create: (BuildContext context) => AddProjectBloc()
+          ..add(AddProjectInitialEvent(context: context)),
+        child: const AddProjectScreen());
+  }
+
+  static Widget buildResourcesAllocationScreen() {
+    return BlocProvider(
+        create: (BuildContext context) => ResourcesAllocationBloc()
+          ..add(ResourcesAllocationInitialEvent(context: context)),
+        child: const ResourcesAllocationScreen());
   }
 
 }
