@@ -22,8 +22,13 @@ class InputValidator {
   }
 
   static String? firstName(String? value) {
-    if (Validations.isEmpty(value)) return 'Please enter your first name';
-    return null;
+    if (Validations.isEmpty(value))
+      return 'Please enter your first name';
+    if(value!.length < 3){
+      return 'Please enter above 3 characters';
+    } else {
+      return null;
+    }
   }
   static String? projectName(String? value) {
     if (Validations.isEmpty(value))

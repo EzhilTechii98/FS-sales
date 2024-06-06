@@ -2,6 +2,7 @@
 
 import 'package:dms_dealers/router.dart';
 import 'package:dms_dealers/utils/appBar.dart';
+import 'package:dms_dealers/utils/hookup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -158,12 +159,41 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                             ),
                                             const SizedBox(height: 5),
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Chip(
-                                                  label: const Text('Health'),
-                                                  backgroundColor: Colors.deepOrangeAccent.shade100,
+                                                ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                      const EdgeInsets.symmetric(horizontal:12.0),
+                                                    ),
+                                                    minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(15.0),
+                                                        side: const BorderSide(color: Colors.red),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {},
+                                                  child: Text('Mobile'),
                                                 ),
+                                                SizedBox(width: 8,),
+                                                ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                      const EdgeInsets.symmetric(horizontal:12.0),
+                                                    ),
+                                                    minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(15.0),
+                                                        side: const BorderSide(color: Colors.red),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {},
+                                                  child: Text('flutter'),
+                                                ),
+                                                Spacer(),
                                                 Icon(_cardExpandedState[index]
                                                     ? Icons.keyboard_arrow_up
                                                     : Icons.keyboard_arrow_down),
@@ -195,16 +225,26 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                         ),
                                                       ),
                                                       const Spacer(),
-                                                      SvgPicture.asset(
-                                                        ImageResource.call,
-                                                        width: 20,
-                                                        height: 20,
+                                                      InkWell(
+                                                        onTap:() {
+                                                          UrlLauncherHelper.launchPhone('9665746543');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          ImageResource.call,
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
                                                       ),
                                                       const SizedBox(width: 13,),
-                                                      SvgPicture.asset(
-                                                        ImageResource.mail,
-                                                        width: 20,
-                                                        height: 20,
+                                                      InkWell(
+                                                        onTap: () {
+                                                          UrlLauncherHelper.launchEmail('feedback@gmail.com');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          ImageResource.mail,
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -229,16 +269,26 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                         ),
                                                       ),
                                                       const Spacer(),
-                                                      SvgPicture.asset(
-                                                        ImageResource.teams,
-                                                        width: 20,
-                                                        height: 20,
+                                                      InkWell(
+                                                        onTap: () {
+                                                          UrlLauncherHelper.launchTeamsMessage('');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          ImageResource.teams,
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
                                                       ),
                                                       const SizedBox(width: 13,),
-                                                      SvgPicture.asset(
-                                                        ImageResource.mail,
-                                                        width: 20,
-                                                        height: 20,
+                                                      InkWell(
+                                                        onTap:() {
+                                                          UrlLauncherHelper.launchEmail('feedback@gmail.com');
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          ImageResource.mail,
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),

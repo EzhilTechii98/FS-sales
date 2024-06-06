@@ -72,7 +72,7 @@ class CustomTextForm extends StatelessWidget {
             onTap: onTap,
             onTapOutside: onTapOutside,
             controller: controller,
-            inputFormatters: inputFormatters != null ? [inputFormatters!] : null,
+            inputFormatters: inputFormatter,
             autocorrect: autocorrect,
             autovalidateMode: autovalidateMode,
             enabled: enabled,

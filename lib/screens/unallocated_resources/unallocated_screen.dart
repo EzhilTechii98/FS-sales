@@ -1,4 +1,5 @@
 import 'package:dms_dealers/utils/appBar.dart';
+import 'package:dms_dealers/utils/hookup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -109,7 +110,7 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                                         const Spacer(),
                                         InkWell(
                                           onTap: () {
-                                            // _launchTeams();
+                                            UrlLauncherHelper.launchPhone('9556765432');
                                           },
                                           child: SvgPicture.asset(
                                             ImageResource.call,
@@ -120,7 +121,7 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                                         const SizedBox(width: 18,),
                                         InkWell(
                                           onTap: () {
-                                            // _sendingMails();
+                                            UrlLauncherHelper.launchEmail('feedback@gmail.com');
                                           },
                                           child: SvgPicture.asset(
                                             ImageResource.mail,
@@ -132,14 +133,111 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                                     ),
 
                                     // trailing: const Icon(Icons.done),
-                                    subtitle: const Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start  ,
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                       children: [
-                                        Text('This is subtitle'),
-                                        SizedBox(height: 6,),
-                                        Text('This is subtitle'),
-                                        SizedBox(height: 6,),
-                                        Text('Reporting to Harikrishnan'),
+                                        Row(
+                                          children: [
+                                            ElevatedButton(
+                                              style: ButtonStyle(
+                                                padding: MaterialStateProperty.all<
+                                                    EdgeInsetsGeometry>(
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0),
+                                                ),
+                                                minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                                    Size(64, 30)),
+                                                shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                    side: const BorderSide(
+                                                        color: ColorResource.color1DD79F),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: Text('android'),
+                                            ),
+                                            SizedBox(width: 8,),
+                                            ElevatedButton(
+                                              style: ButtonStyle(
+                                                padding: MaterialStateProperty.all<
+                                                    EdgeInsetsGeometry>(
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0),
+                                                ),
+                                                minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                                    Size(64, 30)),
+                                                shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                    side: const BorderSide(
+                                                        color: ColorResource.color1DD79F),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: Text('iOS'),
+                                            ),
+
+                                            SizedBox(width: 10,),
+
+                                            ElevatedButton(
+                                              style: ButtonStyle(
+                                                padding: MaterialStateProperty.all<
+                                                    EdgeInsetsGeometry>(
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0),
+                                                ),
+                                                minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                                    Size(64, 30)),
+                                                shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                    side: const BorderSide(
+                                                        color: ColorResource.colorB11DD7),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: const Text('Fin',
+                                              overflow: TextOverflow.clip,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+
+
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        const Text('Mobile'),
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        const Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(text: 'Reporting to '),
+                                              TextSpan(
+                                                  text: 'Harikrishnan!',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: ColorResource
+                                                          .color804EF6)),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                     selected: true,
@@ -158,62 +256,6 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                     ),
                   ),
                 )
-
-               /* ListView.builder(
-                  itemCount: 2,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        child: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Text(
-                                  "Vasanth kumar",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-                                const Spacer(),
-                                IconButton(
-                                  icon: const Icon(Icons.call),
-                                  onPressed: () {},
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.mail),
-                                  onPressed: () {},
-                                ),
-                              ],
-                            ),
-                            const Text(
-                              'Mobile',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black87),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Chip(
-                                  label: const Text('Health'),
-                                  backgroundColor:
-                                      Colors.deepOrangeAccent.shade100,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ));
-                  },
-                ),*/
               )
             );
           }),

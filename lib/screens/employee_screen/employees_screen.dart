@@ -6,6 +6,7 @@ import 'package:dms_dealers/utils/image_resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,6 +15,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../base/base_state.dart';
 import '../../utils/appBar.dart';
 import '../../utils/color_resources.dart';
+import '../../utils/hookup.dart';
 import 'employees_bloc.dart';
 
 class EmployeesScreen extends StatefulWidget {
@@ -58,11 +60,11 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                           InkWell(
-                             onTap: () {
-                               Navigator.pop(context);
-                             },
-                             child: const Row(
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
@@ -71,8 +73,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                 Icon(Icons.arrow_back),
                                 Text(' Back')
                               ],
-                                                       ),
-                           ),
+                            ),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -85,7 +87,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                               ),
                               ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, AppRoutes.employeeDetails);
+                                    Navigator.pushNamed(
+                                        context, AppRoutes.employeeDetails);
                                   },
                                   style: ButtonStyle(
                                       backgroundColor:
@@ -96,7 +99,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                           RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(10.0),
-                                              side: BorderSide(
+                                              side: const BorderSide(
                                                   color: ColorResource
                                                       .color804EF6)))),
                                   child: const Text(
@@ -122,8 +125,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                   child: ListTile(
                                     leading: const CircleAvatar(
                                       radius: 30.0,
-                                      backgroundImage:
-                                      NetworkImage('https://via.placeholder.com/150'),
+                                      backgroundImage: NetworkImage(
+                                          'https://via.placeholder.com/150'),
                                       backgroundColor: Colors.transparent,
                                     ),
                                     title: Row(
@@ -132,7 +135,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                         const Spacer(),
                                         InkWell(
                                           onTap: () {
-                                            _launchTeams();
+                                            UrlLauncherHelper.launchPhone('9545444444');
                                           },
                                           child: SvgPicture.asset(
                                             ImageResource.call,
@@ -140,10 +143,12 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                             height: 20,
                                           ),
                                         ),
-                                        const SizedBox(width: 18,),
+                                        const SizedBox(
+                                          width: 18,
+                                        ),
                                         InkWell(
                                           onTap: () {
-                                            _sendingMails();
+                                            UrlLauncherHelper.launchEmail('feedback@gmail.com');
                                           },
                                           child: SvgPicture.asset(
                                             ImageResource.mail,
@@ -155,21 +160,91 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                     ),
 
                                     // trailing: const Icon(Icons.done),
-                                    subtitle: const Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start  ,
+                                    subtitle: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text('This is subtitle'),
-                                        SizedBox(height: 6,),
-                                        Text('This is subtitle'),
-                                        SizedBox(height: 6,),
-                                        Text('Reporting to Harikrishnan'),
+                                        Row(
+                                          children: [
+                                            ElevatedButton(
+                                              style: ButtonStyle(
+                                                padding: MaterialStateProperty.all<
+                                                    EdgeInsetsGeometry>(
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0),
+                                                ),
+                                                minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                                    Size(64, 30)),
+                                                shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                    side: const BorderSide(
+                                                        color: ColorResource.color1DD79F),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: Text('iOS'),
+                                            ),
+
+                                            SizedBox(width: 10,),
+
+                                            ElevatedButton(
+                                              style: ButtonStyle(
+                                                padding: MaterialStateProperty.all<
+                                                    EdgeInsetsGeometry>(
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 12.0),
+                                                ),
+                                                minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                                    Size(64, 30)),
+                                                shape: MaterialStateProperty.all<
+                                                    RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                    side: const BorderSide(
+                                                        color: ColorResource.colorB11DD7),
+                                                  ),
+                                                ),
+                                              ),
+                                              onPressed: () {},
+                                              child: const Text('Finance',
+                                                overflow: TextOverflow.clip,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                        ,
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        const Text('Mobile'),
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        const Text.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(text: 'Reporting to '),
+                                              TextSpan(
+                                                  text: 'Harikrishnan!',
+                                                  style: TextStyle(
+                                                      fontSize: 14,
+                                                      color: ColorResource
+                                                          .color804EF6)),
+                                            ],
+                                          ),
+                                        )
                                       ],
                                     ),
                                     selected: true,
                                     onTap: () {
-                                      setState(() {
-
-                                      });
+                                      setState(() {});
                                     },
                                   ),
                                 );
@@ -179,113 +254,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         ],
                       ),
                     ),
-                  )
-                  /* appBar:  CustomAppBar(title: 'Employees',
-                 actions: const [
-                 Icon(Icons.search,
-                 color: Colors.white,
-                 ),
-                 SizedBox(width: 10,)
-               ],),
-                body: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRoutes.employeeDetails);
-                    },
-                    child: ListView.builder(
-                      itemCount:2 ,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 180,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Vasanth kumar",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black
-                                        ),
-                                      ),
-                                      const Spacer(),
-                                      IconButton(
-                                        icon: const Icon(Icons.call),
-                                        onPressed: _launchTeams
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(Icons.mail),
-                                        onPressed: () {
-                                          _sendingMails();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  const Text('Mobile',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87
-                                    ),
-                                  ),
-                                   Chip(
-                                    label: const Text('Health'),
-                                    backgroundColor: Colors.deepOrangeAccent.shade100,
-                                  ),
-                                  RichText(
-                                    text: const TextSpan(text: 'Reporting Manager : ',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold
-                                        ),
-                                        children: [
-                                          TextSpan(text: 'HariKrishnan',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 14
-                                              )
-                                          )
-                                        ]
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        );
-                      },
-                    ),
-                  ),
-                )*/
-                  ),
+                  )),
             );
           }),
     );
-  }
-
-  void _launchTeams() async {
-    const url = 'tel://9445765123';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch Microsoft Teams.';
-    }
-  }
-
-  _sendingMails() async {
-    var url = Uri.parse("mailto:feedback@gmail.com");
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 }
