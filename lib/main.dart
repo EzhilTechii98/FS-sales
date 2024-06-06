@@ -1,5 +1,6 @@
 import 'package:dms_dealers/router.dart';
 import 'package:dms_dealers/screens/splash/splash_screen.dart';
+import 'package:dms_dealers/sqlite/database_sqlite.dart';
 import 'package:dms_dealers/utils/app_themes.dart';
 import 'package:dms_dealers/utils/color_resources.dart';
 import 'package:dms_dealers/widgets/bloc.dart';
@@ -16,6 +17,7 @@ import 'authenticatiom/bloc/authentication_event.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.initDatabase();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

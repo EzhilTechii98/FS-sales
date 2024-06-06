@@ -94,7 +94,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                                 hintText: '',
                                 labelText: '',
                                 suffixIcon: Icon(Icons.keyboard_arrow_down),
-
                               ),
 
                               //Technology
@@ -132,6 +131,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                                 hintText: '',
                                 labelText: '',
                                 keyboardType: TextInputType.number,
+                                validator: InputValidator.phoneNumber,
                               ),
                             ],
                           ),

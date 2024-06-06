@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../base/base_state.dart';
 import '../../router.dart';
+import '../../sqlite/database_sqlite.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/custom_button.dart';
 import '../../utils/image_resources.dart';
@@ -23,7 +24,34 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   TextEditingController mobileNo = TextEditingController();
+
+  final jsonData = '''
+    [
+      {
+        "Username": "Ezhilarasan",
+        "Email": "ezhilarasan@flyerssoft.com",
+        "Designation": "Flutter",
+        "phonenumber": "9445765173",
+        "Team": "flutter",
+        "Reporting Manager": "harikrishnan",
+        "Industry": "finance",
+        "Technology": "IT"
+      },
+      {
+        "Username": "jack",
+        "Email": "jack@flyerssoft.com",
+        "Designation": "Flutter",
+        "phonenumber": "9445898983",
+        "Team": "Android",
+        "Reporting Manager": "harikrishnan",
+        "Industry": "Marketing",
+        "Technology": "IT"
+      }
+    ]
+  ''';
 
   @override
   void dispose() {
@@ -36,6 +64,15 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<LoginBloc>(context);
+  }
+
+  Future<void> login(String email, String password) async {
+    final user = await DatabaseHelper.getUser(email, password);
+    if (user != null) {
+      debugPrint('Login successful: ${user.username}');
+    } else {
+      debugPrint('Login failed');
+    }
   }
 
   @override
@@ -69,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 100,
         ),
         SvgPicture.asset(
@@ -85,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Form(
@@ -93,16 +130,18 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              const CustomTextForm(
+               CustomTextForm(
+                controller: emailController,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 hintText: "Enter your emaiId ",
                 labelText: "Enter EmailId",
                 validator: InputValidator.email,
               ),
-              const CustomTextForm(
+               CustomTextForm(
+                  controller: passwordController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   hintText: "Enter your password ",
                   labelText: "Enter password",
@@ -115,6 +154,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: CustomButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      login(emailController.text, passwordController.text);
                       Navigator.pushNamed(context, AppRoutes.dashboardScreen);
                     }
                   },

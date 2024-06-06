@@ -1,5 +1,3 @@
-
-
 import 'package:dms_dealers/utils/appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +20,10 @@ class AllocatedScreen extends StatefulWidget {
 
 class _AllocatedScreenState extends State<AllocatedScreen> {
   late AllocatedBloc bloc;
-  List<bool> _cardExpandedState = [false, false]; // State to track card expansion
-
+  List<bool> _cardExpandedState = [
+    false,
+    false
+  ]; // State to track card expansion
 
   @override
   void initState() {
@@ -43,319 +43,226 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
               return const Center(
                 child: Text(''),
               );
-            } else if (state is SuccessState) {
-
-            }
+            } else if (state is SuccessState) {}
             return SafeArea(
               child: Scaffold(
                   backgroundColor: Colors.grey.shade200,
-
                   body: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                       children: [
-                         const SizedBox(height: 20,),
-                         InkWell(
-                           onTap: () {
-                             Navigator.pop(context);
-                           },
-                           child: Row(
-                             mainAxisAlignment: MainAxisAlignment.start,
-                             children: [
-                               const SizedBox(
-                                 height: 20,
-                               ),
-                               const Icon(Icons.arrow_back),
-                               InkWell(
-                                 onTap: () {},
-                                 child: const Text(' Back'),
-                               )
-                             ],
-                           ),
-                         ),
-                         SizedBox(height: 10,),
-                         const Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                           children: [
-                             Text('In Project Employee',
-                               style: TextStyle(
-                                   fontSize: 20,
-                                   fontFamily: 'Palanquin-Bold',
-                                   color: ColorResource.color171717),
-                             ),
-                           ],
-                         ),
-                         const CustomTextForm(
-                             prefixIcon: Icon(Icons.search),
-                             hintText: 'Search by name Id',
-                             labelText: ''),
-                         Expanded(
-                           child: ListView.builder(
-                             shrinkWrap: true,
-                             itemCount: 2,
-                             itemBuilder: (BuildContext context, int index) {
-                               return GestureDetector(
-                                 onTap: () {
-                                   setState(() {
-                                     _cardExpandedState[index] = !_cardExpandedState[index];
-                                   });
-                                 },
-                                 child: Card(
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: Column(
-                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                       children: [
-                                         const Row(
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: [
-
-                                             Text('Sugesh'),
-                                           ],
-                                         ),
-                                         const SizedBox(height: 5),
-                                         const Text(
-                                           '12/01/24 to present',
-                                           style: TextStyle(
-                                               fontSize: 14,
-                                               fontWeight: FontWeight.bold,
-                                               color: Colors.black87),
-                                         ),
-                                         const SizedBox(height: 5),
-                                         Row(
-                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                           children: [
-                                             Chip(
-                                               label: const Text('Health'),
-                                               backgroundColor: Colors.deepOrangeAccent.shade100,
-                                             ),
-                                             Icon(_cardExpandedState[index]
-                                                 ? Icons.keyboard_arrow_up
-                                                 : Icons.keyboard_arrow_down),
-                                           ],
-                                         ),
-                                         if (_cardExpandedState[index]) // Conditional rendering
-                                           const SizedBox(height: 10),
-                                         if (_cardExpandedState[index]) //
-                                         // Conditional rendering
-                                           Column(
-                                             children: [
-                                               Row(
-                                                 children: [
-                                                   RichText(
-                                                     text: const TextSpan(text: 'Onboard Date  : ',
-                                                         style: TextStyle(
-                                                             fontSize: 16,
-                                                             color: Colors.black,
-                                                             fontWeight: FontWeight.bold
-                                                         ),
-                                                         children: [
-                                                           TextSpan(text: ' 21-01-2024',
-                                                               style: TextStyle(
-                                                                   color: Colors.black,
-                                                                   fontSize: 14
-                                                               )
-                                                           )
-                                                         ]
-                                                     ),
-                                                   ),
-                                                 ],
-                                               ),
-                                               const SizedBox(height: 10,),
-                                               Row(
-                                                 children: [
-                                                   RichText(
-                                                     text: const TextSpan(text: 'Project Manager : ',
-                                                         style: TextStyle(
-                                                             fontSize: 16,
-                                                             color: Colors.black,
-                                                             fontWeight: FontWeight.bold
-                                                         ),
-                                                         children: [
-                                                           TextSpan(text: ' Dharani dharan',
-                                                               style: TextStyle(
-                                                                   color: Colors.black,
-                                                                   fontSize: 14
-                                                               )
-                                                           )
-                                                         ]
-                                                     ),
-                                                   ),
-                                                   Spacer(),
-                                                   SvgPicture.asset(
-                                                     ImageResource.teams,
-                                                     width: 20,
-                                                     height: 20,
-                                                   ),
-                                                   SizedBox(width: 13,),
-                                                   SvgPicture.asset(
-                                                     ImageResource.mail,
-                                                     width: 20,
-                                                     height: 20,
-                                                   ),
-                                                 ],
-                                               ),
-                                             ],
-                                           )
-                                       ],
-                                     ),
-                                   ),
-                                 ),
-                               );
-                             },
-                           ),
-                         )
-                       ],
-                      ),
-                    )
-
-                    /*ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _cardExpandedState[index] = !_cardExpandedState[index];
-                            });
-                          },
-                            child: Card(
-                                child: SizedBox(
-                                  width: MediaQuery
-                                      .of(context)
-                                      .size
-                                      .width,
-                                  height: _cardExpandedState[index] ? 230 : 150,
-
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
+                      padding: EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Icon(Icons.arrow_back),
+                                  InkWell(
+                                    onTap: () {},
+                                    child: const Text(' Back'),
+                                  )
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'In Project Employee',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontFamily: 'Palanquin-Bold',
+                                      color: ColorResource.color171717),
+                                ),
+                              ],
+                            ),
+                            const CustomTextForm(
+                                prefixIcon: Icon(Icons.search),
+                                hintText: 'Search by name Id',
+                                labelText: ''),
+                            Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: 2,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _cardExpandedState[index] =
+                                            !_cardExpandedState[index];
+                                      });
+                                    },
+                                    child: Card(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
+                                            const Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('Sugesh'),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 5),
                                             const Text(
-                                              "Vasanth kumar",
+                                              '12/01/24 to present',
                                               style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Colors.black
-                                              ),
+                                                  color: Colors.black87),
                                             ),
-                                            const Spacer(),
-                                            IconButton(
-                                              icon: const Icon(Icons.call),
-                                              onPressed: () {
-                                               _launchTeams();
-                                              },
-                                            ),
-                                            IconButton(
-                                              icon: const Icon(Icons.mail),
-                                              onPressed: () {
-                                                _sendingMails();
+                                            const SizedBox(height: 5),
 
-                                              },
-                                            ),
+                                          Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  ElevatedButton(
+                                                    style: ButtonStyle(
+                                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                        const EdgeInsets.symmetric(horizontal:12.0),
+                                                      ),
+                                                      minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15.0),
+                                                          side: const BorderSide(color: Colors.red),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {},
+                                                    child: Text('iOS'),
+                                                  ),
+                                                  IconButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        _cardExpandedState[index] =
+                                                        !_cardExpandedState[index];
+                                                      });
+                                                    },
+                                                    icon: Icon(_cardExpandedState[index]
+                                                        ? Icons.keyboard_arrow_up
+                                                        : Icons.keyboard_arrow_down),
+                                                  ),
+                                                ],
+                                              ),
+
+                                            if (_cardExpandedState[
+                                                index]) // Conditional rendering
+                                              const SizedBox(height: 10),
+                                            if (_cardExpandedState[index]) //
+                                              // Conditional rendering
+                                              Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      RichText(
+                                                        text: const TextSpan(
+                                                            text:
+                                                                'Onboard Date  : ',
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      ' 21-01-2024',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          14))
+                                                            ]),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      RichText(
+                                                        text: const TextSpan(
+                                                            text:
+                                                                'Project Manager : ',
+                                                            style: TextStyle(
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      ' Dharani dharan',
+                                                                  style: TextStyle(
+                                                                      color: Colors
+                                                                          .black,
+                                                                      fontSize:
+                                                                          14))
+                                                            ]),
+                                                      ),
+                                                      Spacer(),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          _launchTeamsMessage();
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          ImageResource.teams,
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 13,
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          _sendingMails();
+                                                        },
+                                                        child: SvgPicture.asset(
+                                                          ImageResource.mail,
+                                                          width: 20,
+                                                          height: 20,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              )
                                           ],
                                         ),
-                                        const Text('Mobile',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .spaceBetween,
-                                          children: [
-                                            Chip(
-                                              label: const Text('Health'),
-                                              backgroundColor: Colors
-                                                  .deepOrangeAccent.shade100,
-                                            ),
-                                            Icon(_cardExpandedState[index]
-                                                ? Icons.keyboard_arrow_up
-                                                : Icons.keyboard_arrow_down),                                          ],
-                                        ),
-                                        if (_cardExpandedState[index]) // Conditional rendering
-                                          const SizedBox(height: 10),
-                                        if (_cardExpandedState[index]) //
-                                        // Conditional rendering
-                                          Column(
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  RichText(
-                                                    text: const TextSpan(text: 'Onboarded Date : ',
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.bold
-                                                        ),
-                                                        children: [
-                                                          TextSpan(text: ' 12/01/24',
-                                                              style: TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 14
-                                                              )
-                                                          )
-                                                        ]
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(height: 10,),
-                                              Row(
-                                                children: [
-                                                  RichText(
-                                                    text: const TextSpan(text: 'Project Manager : ',
-                                                        style: TextStyle(
-                                                            fontSize: 16,
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.bold
-                                                        ),
-                                                        children: [
-                                                          TextSpan(text: ' Dharani dharan',
-                                                              style: TextStyle(
-                                                                  color: Colors.black,
-                                                                  fontSize: 14
-                                                              )
-                                                          )
-                                                        ]
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                  IconButton(
-                                                    icon: const Icon(Icons.textsms_outlined),
-                                                    onPressed: () {
-                                                      _launchTeamsMessage();
-                                                    },
-                                                  ),
-                                                  SizedBox(width: 13,),
-                                                  IconButton(
-                                                    icon: const Icon(Icons.mail),
-                                                    onPressed: () {
-                                                      _sendingMails();
-                                                    },
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          )
-                                      ],
+                                      ),
                                     ),
-                                  ),
-                                )
-                            ),
-
-                        );
-                      },
-                    ),*/
-                  )
-              ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                      ))),
             );
           }),
     );
@@ -380,11 +287,13 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
   }
 
   void _openOutlookMail() async {
-    var emailAddress = 'example@example.com'; // Replace with the recipient's email address
+    var emailAddress =
+        'example@example.com'; // Replace with the recipient's email address
     var subject = 'Subject of the email'; // Optional subject
     var body = 'Body of the email'; // Optional body
 
-    var url = 'mailto:$emailAddress?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
+    var url =
+        'mailto:$emailAddress?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
 
     if (await canLaunch(url)) {
       await launch(url);
@@ -393,14 +302,13 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
     }
   }
 
-
   void _launchTeamsMessage() async {
-    const url = 'msteams://teams.microsoft.com/l/chat/0/0?users=vasanthkumar.kamalakannan@flyerssoft.com';
+    const url =
+        'msteams://teams.microsoft.com/l/chat/0/0?users=vasanthkumar.kamalakannan@flyerssoft.com';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Could not launch Microsoft Teams.';
     }
   }
-
 }
