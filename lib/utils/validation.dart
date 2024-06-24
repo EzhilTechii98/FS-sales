@@ -5,10 +5,11 @@ class InputValidator {
     if (Validations.isEmpty(value)) {
       return 'Please enter your email address';
     }
-    if (!Validations.isValidEmail(value)) {
-      return 'Please enter a correct email address';
+    if(value!.length < 3){
+      return 'Please enter above 3 characters';
+    } else {
+      return null;
     }
-    return null;
   }
 
   static String? password(String? value) {
@@ -22,8 +23,9 @@ class InputValidator {
   }
 
   static String? firstName(String? value) {
-    if (Validations.isEmpty(value))
+    if (Validations.isEmpty(value)) {
       return 'Please enter your first name';
+    }
     if(value!.length < 3){
       return 'Please enter above 3 characters';
     } else {
@@ -31,8 +33,9 @@ class InputValidator {
     }
   }
   static String? projectName(String? value) {
-    if (Validations.isEmpty(value))
+    if (Validations.isEmpty(value)) {
       return 'Please enter your project name';
+    }
     return null;
   }
 
@@ -68,6 +71,30 @@ class InputValidator {
     if (value!.length > 2) {
       return 'Please enter a correct client email address';
     }
+    return null;
+  }
+
+  static String? team(String? value) {
+    if (Validations.isEmpty(value))
+      return 'Please select your team';
+    return null;
+  }
+
+  static String? designation(String? value) {
+    if (Validations.isEmpty(value))
+      return 'Please select your designation';
+    return null;
+  }
+
+  static String? industries(String? value) {
+    if (Validations.isEmpty(value))
+      return 'Please select your industry';
+    return null;
+  }
+
+  static String? technology(String? value) {
+    if (Validations.isEmpty(value))
+      return 'Please select your technology';
     return null;
   }
 

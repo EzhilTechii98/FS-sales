@@ -49,7 +49,7 @@ Route<dynamic>? getRoute(RouteSettings settings) {
     case AppRoutes.loginScreen:
       return _buildLoginScreen();
     case AppRoutes.dashboardScreen:
-      return _buildDashboardScreen();
+      return _buildDashboardScreen(settings);
     case AppRoutes.employeeList:
       return _buildEmployeeScreen();
     case AppRoutes.projects:
@@ -74,7 +74,7 @@ Route<dynamic> _buildLoginScreen() {
       builder: (BuildContext context) => PageBuilder.buildLoginScreen());
 }
 
-Route<dynamic> _buildDashboardScreen() {
+Route<dynamic> _buildDashboardScreen(dynamic users) {
   return MaterialPageRoute(
       builder: (BuildContext context) => PageBuilder.buildDashboardScreen());
 }
@@ -117,10 +117,11 @@ class PageBuilder {
   }
 
   static Widget buildDashboardScreen() {
+    Map<String, dynamic>? user;
     return BlocProvider(
         create: (BuildContext context) => DashboardBloc()
           ..add(DashboardInitialEvent(context: context)),
-        child: const DashboardScreen());
+        child:  DashboardScreen());
   }
 
   static Widget buildEmployeeScreen() {

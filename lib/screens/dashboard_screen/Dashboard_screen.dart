@@ -1,14 +1,18 @@
 import 'package:dms_dealers/router.dart';
+import 'package:dms_dealers/utils/app_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
+import '../../sqlite/login_sqlite.dart';
 import '../../utils/appBar.dart';
 import '../../utils/color_resources.dart';
 import 'Dashboard_bloc.dart';
 
 class DashboardScreen extends StatefulWidget {
+
   const DashboardScreen({Key? key}) : super(key: key);
 
   @override
@@ -17,18 +21,28 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late DashboardBloc bloc;
+  final DatabaseHelper dbHelper = DatabaseHelper();
+  String userName = '';
+
 
   @override
   void initState() {
     super.initState();
     bloc = BlocProvider.of<DashboardBloc>(context);
+    loadJsonData(dbHelper);
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener(
       bloc: bloc,
-      listener: (BuildContext context, BaseState state) async {},
+      listener: (BuildContext context, BaseState state) async {
+        final String username = userName ;
+
+        // final user = await dbHelper.getAllUser(username);
+        // print(user);
+
+      },
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
@@ -39,41 +53,78 @@ class _DashboardScreenState extends State<DashboardScreen> {
             } else if (state is SuccessState) {}
             return SafeArea(
               child: Scaffold(
-                appBar:  CustomAppBar(title: 'Dashboard', actions: [],),
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 30,),
-                        const Text('  Hello, Vasanthkumar',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.black
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Dashboard',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: ColorResource.color0B101C,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                AppUtils.showToast('Working Progress');
+                              },
+                              icon: Icon(Icons.power_settings_new),
+                            ),
+                          ],
+                        ),
 
+                        const SizedBox(
+                          height: 20,
                         ),
+                         const Text(
+                          'Hello, Vasanth kumar',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: ColorResource.color0B101C),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         InkWell(
                           onTap: () {
-                            Navigator.pushNamed(context, AppRoutes.employeeList);
+                            Navigator.pushNamed(
+                                context, AppRoutes.employeeList);
                           },
                           child: Card(
                             elevation: 2,
+                            color: ColorResource.color804EF6,
                             child: Container(
                               padding: const EdgeInsets.all(20),
                               height: 70,
                               width: MediaQuery.of(context).size.width,
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.group),
-
-                                  Text('Employee Details'),
-
-                                  Text("20")
+                                  Icon(Icons.group,
+                                      color: ColorResource.colorFFFFFF),
+                                  Text(
+                                    'Employee Details',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  ),
+                                  Text(
+                                    "20",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  )
                                 ],
                               ),
                             ),
@@ -85,21 +136,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Navigator.pushNamed(context, AppRoutes.projects);
                           },
                           child: Card(
+                            color: ColorResource.color804EF6,
                             elevation: 2,
                             child: Container(
                               padding: const EdgeInsets.all(20),
                               height: 70,
                               width: MediaQuery.of(context).size.width,
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.group),
-
-                                  Text('Projects'),
-
-                                  Text( "20")
+                                  Icon(Icons.precision_manufacturing,
+                                      color: ColorResource.colorFFFFFF),
+                                  Text(
+                                    'Projects',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  ),
+                                  Text(
+                                    "20",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  )
                                 ],
-                              ) ,
+                              ),
                             ),
                           ),
                         ),
@@ -110,21 +172,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Navigator.pushNamed(context, AppRoutes.allocated);
                           },
                           child: Card(
+                            color: ColorResource.color804EF6,
                             elevation: 2,
                             child: Container(
                               padding: EdgeInsets.all(20),
                               height: 70,
                               width: MediaQuery.of(context).size.width,
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.group),
-
-                                  Text('Allocated resources'),
-
-                                  Text("20")
+                                  Icon(Icons.reduce_capacity,
+                                      color: ColorResource.colorFFFFFF),
+                                  Text(
+                                    'Allocated resources',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  ),
+                                  Text(
+                                    "20",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  )
                                 ],
-                              ) ,
+                              ),
                             ),
                           ),
                         ),
@@ -135,23 +208,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             Navigator.pushNamed(context, AppRoutes.unallocated);
                           },
                           child: Card(
+                            color: ColorResource.color804EF6,
                             elevation: 2,
                             child: Container(
                               padding: const EdgeInsets.all(20),
                               height: 70,
                               width: MediaQuery.of(context).size.width,
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(Icons.group),
-                                  Text('UnAllocated Resources'),
-                                  Text("20")
+                                  Icon(Icons.person_add_disabled_sharp,
+                                      color: ColorResource.colorFFFFFF),
+                                  Text(
+                                    'UnAllocated Resources',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  ),
+                                  Text(
+                                    "20",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: ColorResource.colorFFFFFF),
+                                  )
                                 ],
-                              ) ,
+                              ),
                             ),
                           ),
                         )
-
                       ],
                     ),
                   ),

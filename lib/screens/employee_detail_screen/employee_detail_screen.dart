@@ -1,5 +1,5 @@
 import 'package:dms_dealers/utils/app_utils.dart';
-import 'package:dms_dealers/utils/custom_textForm_field.dart';
+import 'package:dms_dealers/utils/base_textForm_field.dart';
 import 'package:dms_dealers/utils/validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../base/base_state.dart';
+import '../../utils/base_search_field.dart';
 import '../../utils/color_resources.dart';
-import '../../utils/custom_button.dart';
+import '../../utils/base_button.dart';
 import 'employee_detail_bloc.dart';
 
 class EmployeeDetailsScreen extends StatefulWidget {
@@ -45,7 +46,6 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   @override
   void initState() {
     super.initState();
-
     bloc = BlocProvider.of<EmployeeDetailsBloc>(context);
   }
 
@@ -58,7 +58,9 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   Widget build(BuildContext context) {
     return BlocListener(
       bloc: bloc,
-      listener: (BuildContext context, BaseState state) async {},
+      listener: (BuildContext context, BaseState state) async {
+
+      },
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
@@ -66,7 +68,9 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
               return const Center(
                 child: Text(''),
               );
-            } else if (state is SuccessState) {}
+            } else if (state is SuccessState) {
+
+            }
             return SafeArea(
               child: Scaffold(
                   body: Padding(
@@ -112,6 +116,17 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                           key: _formKey,
                           child: ListView(
                             children: [
+                              const Center(
+                                child: CircleAvatar(
+                                  radius: 40.0,
+                                  backgroundColor: Colors.grey,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 40.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
                               const CustomTextStyle(text: 'Employee Name'),
                               CustomTextForm(
                                 autovalidateMode:
@@ -157,15 +172,61 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
 
                               const CustomTextStyle(text: 'Team'),
                               CustomTextForm(
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                readOnly: true,
+                                onTap: () {
+                                  List<String> _selectedOptions = [];
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return SearchableCheckboxListDialog(
+                                          options: const ['Mobile', 'React', 'backend'],
+                                          selectedOptions: _selectedOptions,
+                                          onChanged: (List<String> selectedOptions) {
+                                            setState(() {
+                                              _selectedOptions = selectedOptions;
+                                              teamController.text = _selectedOptions.join(', ');
+                                            });
+                                          },
+                                        );
+                                      },
+                                    );
+
+                                },
                                 hintText: '',
                                 labelText: '',
                                 controller: teamController,
+                                validator: InputValidator.team,
                                 suffixIcon:
                                     const Icon(Icons.keyboard_arrow_down),
+
                               ),
 
                               const CustomTextStyle(text: 'Designation'),
                               CustomTextForm(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                readOnly: true,
+                                validator: InputValidator.designation,
+                                onTap: () {
+                                  List<String> _selectedOptions = [];
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SearchableCheckboxListDialog(
+                                        options: const ['Software', 'AssociateSoftware', 'Tech Lead',
+                                        'Architect'
+                                        ],
+                                        selectedOptions: _selectedOptions,
+                                        onChanged: (List<String> selectedOptions) {
+                                          setState(() {
+                                            _selectedOptions = selectedOptions;
+                                            designationController.text = _selectedOptions.join(', ');
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
                                 hintText: '',
                                 labelText: '',
                                 controller: designationController,
@@ -186,39 +247,67 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
 
                               const CustomTextStyle(text: 'Industry'),
                               CustomTextForm(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                readOnly: true,
+                                validator:InputValidator.industries,
+                                onTap: () {
+                                  List<String> _selectedOptions = [];
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SearchableCheckboxListDialog(
+                                        options: const ['Finance', 'Marketing', 'E-commerce',
+                                          'health care'
+                                        ],
+                                        selectedOptions: _selectedOptions,
+                                        onChanged: (List<String> selectedOptions) {
+                                          setState(() {
+                                            _selectedOptions = selectedOptions;
+                                            industryController.text = _selectedOptions.join(', ');
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 hintText: '',
                                 labelText: '',
                                 controller: industryController,
-                                suffixIcon:
-                                    const Icon(Icons.keyboard_arrow_down),
-                                validator: InputValidator.industry,
+                                suffixIcon: const Icon(Icons.keyboard_arrow_down),
+
                               ),
 
                               const CustomTextStyle(text: 'Technology'),
                               CustomTextForm(
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                readOnly: true,
+                                validator: InputValidator.technology,
+                                onTap: () {
+                                  List<String> _selectedOptions = [];
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SearchableCheckboxListDialog(
+                                        options: const ['xamarin', 'android', 'iOS',
+                                          'flutter', 'kotlin'
+                                        ],
+                                        selectedOptions: _selectedOptions,
+                                        onChanged: (List<String> selectedOptions) {
+                                          setState(() {
+                                            _selectedOptions = selectedOptions;
+                                            technologyController.text = _selectedOptions.join(', ');
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+
                                 hintText: '',
                                 labelText: '',
                                 controller: technologyController,
                                 suffixIcon:
                                     const Icon(Icons.keyboard_arrow_down),
-                              ),
-
-                              MultiSelectDropDown(
-                                onOptionSelected: (selectedOptions) {
-                                  setState(() {
-                                    _selectedOptions = selectedOptions;
-                                  });
-                                },
-                                borderWidth: 1,
-                                borderColor: Colors.black,
-                                options: _options,
-                                selectionType: SelectionType.multi,
-                                dropdownHeight: 300,
-                                optionTextStyle: const TextStyle(fontSize: 16),
-                                selectedOptionIcon:
-                                    const Icon(Icons.check_circle),
                               ),
                             ],
                           ),
@@ -226,14 +315,17 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                       ),
                       Align(
                         alignment: Alignment.center,
-                        child: CustomButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              print('new');
-                            }
-                            // Add your button onPressed logic here
-                          },
-                          text: 'Update',
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: CustomButton(
+                            onPressed: () {
+                              if (_formKey.currentState!.validate()) {
+                                print('new');
+                              }
+                              // Add your button onPressed logic here
+                            },
+                            text: 'Update',
+                          ),
                         ),
                       )
                     ],

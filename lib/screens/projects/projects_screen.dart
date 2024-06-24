@@ -11,7 +11,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../base/base_state.dart';
 import '../../utils/color_resources.dart';
-import '../../utils/custom_textForm_field.dart';
+import '../../utils/base_textForm_field.dart';
 import '../../utils/image_resources.dart';
 import 'projects_bloc.dart';
 
@@ -137,15 +137,23 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            const Row(
+                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                Text('Yap',
+                                                const Text('Yap',
                                                   style: TextStyle(
                                                       fontSize: 16,
                                                       fontFamily: 'Palanquin-Regular',
                                                       color: Colors.black87),
                                                 ),
+                                                SizedBox(width: 5,),
+                                                SvgPicture.asset(
+                                                  ImageResource.green,
+                                                  width: 10,
+                                                  height: 10,
+                                                ),
+                                                Spacer(),
+
                                                 Text('Finance')
                                               ],
                                             ),
@@ -165,33 +173,33 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                                                       const EdgeInsets.symmetric(horizontal:12.0),
                                                     ),
-                                                    minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                    minimumSize: MaterialStateProperty.all<Size>(const Size(64, 30)),
                                                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                                       RoundedRectangleBorder(
                                                         borderRadius: BorderRadius.circular(15.0),
-                                                        side: const BorderSide(color: Colors.red),
+                                                        side:  const BorderSide(color: ColorResource.color1DD79F),
                                                       ),
                                                     ),
                                                   ),
                                                   onPressed: () {},
-                                                  child: Text('Mobile'),
+                                                  child: const Text('Android'),
                                                 ),
-                                                SizedBox(width: 8,),
+                                                const SizedBox(width: 8,),
                                                 ElevatedButton(
                                                   style: ButtonStyle(
                                                     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                                                       const EdgeInsets.symmetric(horizontal:12.0),
                                                     ),
-                                                    minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                    minimumSize: MaterialStateProperty.all<Size>(const Size(64, 30)),
                                                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                                       RoundedRectangleBorder(
                                                         borderRadius: BorderRadius.circular(15.0),
-                                                        side: const BorderSide(color: Colors.red),
+                                                        side:  const BorderSide(color: ColorResource.color1DD79F),
                                                       ),
                                                     ),
                                                   ),
                                                   onPressed: () {},
-                                                  child: Text('flutter'),
+                                                  child: const Text('Flutter'),
                                                 ),
                                                 Spacer(),
                                                 Icon(_cardExpandedState[index]

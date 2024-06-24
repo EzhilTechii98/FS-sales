@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../base/base_state.dart';
 import '../../utils/color_resources.dart';
-import '../../utils/custom_textForm_field.dart';
+import '../../utils/base_textForm_field.dart';
 import '../../utils/image_resources.dart';
 import 'unallocated_bloc.dart';
 
@@ -100,9 +100,12 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                                   child: ListTile(
                                     leading: const CircleAvatar(
                                       radius: 30.0,
-                                      backgroundImage:
-                                      NetworkImage('https://via.placeholder.com/150'),
-                                      backgroundColor: Colors.transparent,
+                                      backgroundColor: Colors.grey,
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 30.0,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                     title: Row(
                                       children: [
@@ -210,7 +213,7 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                                                 ),
                                               ),
                                               onPressed: () {},
-                                              child: const Text('Fin',
+                                              child: const Text('Health',
                                               overflow: TextOverflow.clip,
                                               ),
                                             ),
