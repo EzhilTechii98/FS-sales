@@ -57,9 +57,10 @@ dependencies:
 
 dev_dependencies:
   equatable: ^2.0.3
-  json_serializable: ^6.0.1
+  json_serializable: ^6.7.0
   build_runner: ^2.0.4
   flutter_lints: ^2.0.1
+  json_annotation: ^4.8.0
   flutter_test:
     sdk: flutter
 
@@ -83,6 +84,7 @@ flutter:
   assets:
     - assets/
     - assets/png/
+    - assets/users.json
 
   fonts:
     - family: Poppins

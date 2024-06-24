@@ -1,13 +1,14 @@
-import 'package:dms_dealers/utils/custom_textForm_field.dart';
+import 'package:dms_dealers/utils/app_utils.dart';
+import 'package:dms_dealers/utils/base_textForm_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../base/base_state.dart';
 import '../../router.dart';
-import '../../sqlite/database_sqlite.dart';
+import '../../sqlite/login_sqlite.dart';
 import '../../utils/color_resources.dart';
-import '../../utils/custom_button.dart';
+import '../../utils/base_button.dart';
 import '../../utils/image_resources.dart';
 import '../../utils/validation.dart';
 import 'login_bloc.dart';
@@ -27,31 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   TextEditingController mobileNo = TextEditingController();
+  final DatabaseHelper dbHelper = DatabaseHelper();
+  final String correctPassword = '123456';
+  String? defaultEmailDomain = '@flyerssoft.com';
 
-  final jsonData = '''
-    [
-      {
-        "Username": "Ezhilarasan",
-        "Email": "ezhilarasan@flyerssoft.com",
-        "Designation": "Flutter",
-        "phonenumber": "9445765173",
-        "Team": "flutter",
-        "Reporting Manager": "harikrishnan",
-        "Industry": "finance",
-        "Technology": "IT"
-      },
-      {
-        "Username": "jack",
-        "Email": "jack@flyerssoft.com",
-        "Designation": "Flutter",
-        "phonenumber": "9445898983",
-        "Team": "Android",
-        "Reporting Manager": "harikrishnan",
-        "Industry": "Marketing",
-        "Technology": "IT"
-      }
-    ]
-  ''';
+
+
+
 
   @override
   void dispose() {
@@ -64,14 +47,21 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<LoginBloc>(context);
+    loadJsonData(dbHelper);
   }
 
-  Future<void> login(String email, String password) async {
-    final user = await DatabaseHelper.getUser(email, password);
-    if (user != null) {
-      debugPrint('Login successful: ${user.username}');
+  void login() async {
+    final String email = emailController.text + defaultEmailDomain!;
+    final String password = passwordController.text;
+
+     final user = await dbHelper.getUser(email);
+
+    if (user != null && password == correctPassword) {
+
+      Navigator.pushNamed(context, AppRoutes.dashboardScreen,arguments: user);
+
     } else {
-      debugPrint('Login failed');
+      AppUtils.showToast('Invalid username or password');
     }
   }
 
@@ -135,10 +125,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
                CustomTextForm(
                 controller: emailController,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                hintText: "Enter your emaiId ",
-                labelText: "Enter EmailId",
-                validator: InputValidator.email,
+                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                hintText: "Enter your email id ",
+                labelText: "Enter Email id",
+                 validator: InputValidator.email,
+                 suffixText: defaultEmailDomain,
+                 onSaved: (value) {
+                   emailController.text = value! + defaultEmailDomain!;
+                 },
               ),
                CustomTextForm(
                   controller: passwordController,
@@ -154,8 +148,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: CustomButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      login(emailController.text, passwordController.text);
-                      Navigator.pushNamed(context, AppRoutes.dashboardScreen);
+                      login();
+                      // login(emailController.text, passwordController.text);
                     }
                   },
                   text: '    Login    ',

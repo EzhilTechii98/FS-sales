@@ -15,7 +15,7 @@ class AppUtils {
   }
 
   static void showToast(String text,
-      {ToastGravity gravity = ToastGravity.CENTER}) {
+      {ToastGravity gravity = ToastGravity.BOTTOM}) {
     Fluttertoast.showToast(
         msg: text,
         toastLength: Toast.LENGTH_SHORT,

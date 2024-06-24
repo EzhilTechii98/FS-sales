@@ -4,6 +4,8 @@ class ImageResource {
    static const String mail = 'assets/png/mail.svg';
    static const String teams = 'assets/png/teams.svg';
    static const String loginLogo = 'assets/png/logo-login.svg';
+   static const String red = 'assets/png/red.svg';
+   static const String green = 'assets/png/green.svg';
 
 
 }

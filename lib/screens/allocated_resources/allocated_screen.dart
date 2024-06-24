@@ -1,4 +1,5 @@
 import 'package:dms_dealers/utils/appBar.dart';
+import 'package:dms_dealers/utils/hookup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../base/base_state.dart';
 import '../../utils/color_resources.dart';
-import '../../utils/custom_textForm_field.dart';
+import '../../utils/base_textForm_field.dart';
 import '../../utils/image_resources.dart';
 import 'allocated_bloc.dart';
 
@@ -132,7 +133,6 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
                                             const SizedBox(height: 5),
 
                                           Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
                                                   ElevatedButton(
                                                     style: ButtonStyle(
@@ -143,13 +143,48 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
                                                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                                         RoundedRectangleBorder(
                                                           borderRadius: BorderRadius.circular(15.0),
-                                                          side: const BorderSide(color: Colors.red),
+                                                          side: const BorderSide(color: ColorResource.color1D67D7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {},
+                                                    child: Text('Planet'),
+                                                  ),
+                                                  SizedBox(width: 8),
+                                                  ElevatedButton(
+                                                    style: ButtonStyle(
+                                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                        const EdgeInsets.symmetric(horizontal:12.0),
+                                                      ),
+                                                      minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15.0),
+                                                          side: const BorderSide(color: ColorResource.color1DD79F),
                                                         ),
                                                       ),
                                                     ),
                                                     onPressed: () {},
                                                     child: Text('iOS'),
                                                   ),
+                                                  SizedBox(width: 8),
+                                                  ElevatedButton(
+                                                    style: ButtonStyle(
+                                                      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                        const EdgeInsets.symmetric(horizontal:12.0),
+                                                      ),
+                                                      minimumSize: MaterialStateProperty.all<Size>(Size(64, 30)),
+                                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius: BorderRadius.circular(15.0),
+                                                          side: const BorderSide(color: ColorResource.colorB11DD7),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    onPressed: () {},
+                                                    child: Text('Finance'),
+                                                  ),
+                                                  Spacer(),
                                                   IconButton(
                                                     onPressed: () {
                                                       setState(() {
@@ -163,6 +198,7 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
                                                   ),
                                                 ],
                                               ),
+
 
                                             if (_cardExpandedState[
                                                 index]) // Conditional rendering
@@ -227,7 +263,7 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
                                                       Spacer(),
                                                       InkWell(
                                                         onTap: () {
-                                                          _launchTeamsMessage();
+                                                          UrlLauncherHelper.launchTeamsMessage('ezhilarasan.s@flyerssoft.com');
                                                         },
                                                         child: SvgPicture.asset(
                                                           ImageResource.teams,
@@ -240,7 +276,7 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
                                                       ),
                                                       InkWell(
                                                         onTap: () {
-                                                          _sendingMails();
+                                                          UrlLauncherHelper.launchEmail('feedback@gmail.com');
                                                         },
                                                         child: SvgPicture.asset(
                                                           ImageResource.mail,
@@ -266,49 +302,5 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
             );
           }),
     );
-  }
-
-  void _launchTeams() async {
-    const url = 'tel://9445765123';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch Microsoft Teams.';
-    }
-  }
-
-  _sendingMails() async {
-    var url = Uri.parse("mailto:feedback@gmail.com");
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  void _openOutlookMail() async {
-    var emailAddress =
-        'example@example.com'; // Replace with the recipient's email address
-    var subject = 'Subject of the email'; // Optional subject
-    var body = 'Body of the email'; // Optional body
-
-    var url =
-        'mailto:$emailAddress?subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}';
-
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  void _launchTeamsMessage() async {
-    const url =
-        'msteams://teams.microsoft.com/l/chat/0/0?users=vasanthkumar.kamalakannan@flyerssoft.com';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch Microsoft Teams.';
-    }
   }
 }
