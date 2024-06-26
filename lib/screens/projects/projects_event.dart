@@ -12,3 +12,10 @@ class ProjectsInitialEvent extends ProjectsEvent {
   ProjectsInitialEvent({this.context});
 
 }
+
+class ProjectListDetails extends ProjectsEvent {
+  BuildContext? context;
+  dynamic arguments;
+
+  ProjectListDetails({this.context});
+}

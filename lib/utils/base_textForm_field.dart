@@ -29,6 +29,8 @@ class CustomTextForm extends StatelessWidget {
   final GestureTapCallback? onTap;
   final TextStyle? errorStyle;
   final List<TextInputFormatter>? inputFormatter;
+  final void Function(String?)? onSaved;
+
 
   const CustomTextForm({
     super.key,
@@ -58,7 +60,8 @@ class CustomTextForm extends StatelessWidget {
     this.labelStyle,
     this.onTap,
     this.errorStyle,
-    this.inputFormatter
+    this.inputFormatter,
+    this.onSaved
   });
 
   @override
@@ -72,7 +75,7 @@ class CustomTextForm extends StatelessWidget {
             onTap: onTap,
             onTapOutside: onTapOutside,
             controller: controller,
-            inputFormatters: inputFormatters != null ? [inputFormatters!] : null,
+            inputFormatters: inputFormatter,
             autocorrect: autocorrect,
             autovalidateMode: autovalidateMode,
             enabled: enabled,
@@ -84,6 +87,7 @@ class CustomTextForm extends StatelessWidget {
             readOnly: readOnly,
             textCapitalization: textCapitalization,
             validator: validator,
+            onSaved: onSaved,
             decoration: InputDecoration(
               counterText: counterText,
               errorText: errorText,

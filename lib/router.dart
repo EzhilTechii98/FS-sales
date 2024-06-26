@@ -25,12 +25,14 @@ import 'package:dms_dealers/screens/resources_allocation_screen/res_allocation_s
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_bloc.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_event.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_screen.dart';
+import 'package:dms_dealers/sqlite/employee_sqlite_db.dart';
 import 'package:dms_dealers/utils/color_resources.dart';
 import 'package:dms_dealers/utils/perference_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'authenticatiom/bloc/authentication_bloc.dart';
 import 'authenticatiom/bloc/authentication_state.dart';
+
 
 class AppRoutes {
   static const String dashboardScreen = 'dashboard_screen';
@@ -49,7 +51,7 @@ Route<dynamic>? getRoute(RouteSettings settings) {
     case AppRoutes.loginScreen:
       return _buildLoginScreen();
     case AppRoutes.dashboardScreen:
-      return _buildDashboardScreen();
+      return _buildDashboardScreen(settings);
     case AppRoutes.employeeList:
       return _buildEmployeeScreen();
     case AppRoutes.projects:
@@ -74,7 +76,7 @@ Route<dynamic> _buildLoginScreen() {
       builder: (BuildContext context) => PageBuilder.buildLoginScreen());
 }
 
-Route<dynamic> _buildDashboardScreen() {
+Route<dynamic> _buildDashboardScreen(dynamic users) {
   return MaterialPageRoute(
       builder: (BuildContext context) => PageBuilder.buildDashboardScreen());
 }
@@ -117,10 +119,11 @@ class PageBuilder {
   }
 
   static Widget buildDashboardScreen() {
+    Map<String, dynamic>? user;
     return BlocProvider(
         create: (BuildContext context) => DashboardBloc()
           ..add(DashboardInitialEvent(context: context)),
-        child: const DashboardScreen());
+        child:  DashboardScreen());
   }
 
   static Widget buildEmployeeScreen() {
@@ -152,6 +155,7 @@ class PageBuilder {
   }
 
   static Widget buildEmployeeDetails() {
+    print('====================');
     return BlocProvider(
         create: (BuildContext context) => EmployeeDetailsBloc()
           ..add(EmployeeDetailsInitialEvent(context: context)),

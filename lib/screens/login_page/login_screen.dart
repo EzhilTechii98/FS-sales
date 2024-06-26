@@ -1,12 +1,14 @@
-import 'package:dms_dealers/utils/custom_textForm_field.dart';
+import 'package:dms_dealers/utils/app_utils.dart';
+import 'package:dms_dealers/utils/base_textForm_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../base/base_state.dart';
 import '../../router.dart';
+import '../../sqlite/employee_sqlite_db.dart';
 import '../../utils/color_resources.dart';
-import '../../utils/custom_button.dart';
+import '../../utils/base_button.dart';
 import '../../utils/image_resources.dart';
 import '../../utils/validation.dart';
 import 'login_bloc.dart';
@@ -23,7 +25,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   TextEditingController mobileNo = TextEditingController();
+  // final DatabaseHelper dbHelper = DatabaseHelper();
+  final String correctPassword = '123456';
+  String? defaultEmailDomain = '@flyerssoft.com';
+
+
+
+
 
   @override
   void dispose() {
@@ -36,7 +47,23 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<LoginBloc>(context);
+    // loadJsonData(dbHelper);
   }
+
+  // void login() async {
+  //   final String email = emailController.text + defaultEmailDomain!;
+  //   final String password = passwordController.text;
+  //
+  //    final user = await dbHelper.getUser(email);
+  //
+  //   if (user != null && password == correctPassword) {
+  //
+  //     Navigator.pushNamed(context, AppRoutes.dashboardScreen,arguments: user);
+  //
+  //   } else {
+  //     AppUtils.showToast('Invalid username or password');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 100,
         ),
         SvgPicture.asset(
@@ -85,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Form(
@@ -93,16 +120,22 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              const CustomTextForm(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                hintText: "Enter your emaiId ",
-                labelText: "Enter EmailId",
-                validator: InputValidator.email,
+               CustomTextForm(
+                controller: emailController,
+                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                hintText: "Enter your email id ",
+                labelText: "Enter Email id",
+                 validator: InputValidator.email,
+                 suffixText: defaultEmailDomain,
+                 onSaved: (value) {
+                   emailController.text = value! + defaultEmailDomain!;
+                 },
               ),
-              const CustomTextForm(
+               CustomTextForm(
+                  controller: passwordController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   hintText: "Enter your password ",
                   labelText: "Enter password",
@@ -116,6 +149,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       Navigator.pushNamed(context, AppRoutes.dashboardScreen);
+
+                      // login();
+                      // login(emailController.text, passwordController.text);
                     }
                   },
                   text: '    Login    ',

@@ -12,3 +12,10 @@ class EmployeesInitialEvent extends EmployeesEvent {
   EmployeesInitialEvent({this.context});
 
 }
+
+class EmployeeListDetails extends EmployeesEvent {
+  BuildContext? context;
+  dynamic arguments;
+
+  EmployeeListDetails({this.context});
+}

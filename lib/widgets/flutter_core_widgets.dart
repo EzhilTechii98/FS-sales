@@ -1,5 +1,8 @@
 import 'dart:async';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+
+import '../utils/app_utils.dart';
 
 /// Base class of the CoreWidget's stateful widget class
 abstract class CoreWidgets extends StatefulWidget {
@@ -46,20 +49,20 @@ class CoreWidgetsState<T> extends State<CoreWidgets> {
     // _scaffoldKey.currentState!.showSnackBar(SnackBar(content: Text(value)));
   }
 
-  // Future<void> toCheckInternetConnection() async {
-  //   await Connectivity().checkConnectivity().then((ConnectivityResult result) {
-  //     if (result.name == 'none') {
-  //       AppUtils.showToast('No Internet');
-  //       // showLoaderDialog(isDismiss: false);
-  //     } else {}
-  //   });
-  //   Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-  //     if (result.name == 'none') {
-  //       AppUtils.showToast('No Internet');
-  //       // showLoaderDialog(isDismiss: false);
-  //     } else {}
-  //   });
-  // }
+  Future<void> toCheckInternetConnection() async {
+    await Connectivity().checkConnectivity().then((ConnectivityResult result) {
+      if (result.name == 'none') {
+        AppUtils.showToast('No Internet');
+        // showLoaderDialog(isDismiss: false);
+      } else {}
+    });
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      if (result.name == 'none') {
+        AppUtils.showToast('No Internet');
+        // showLoaderDialog(isDismiss: false);
+      } else {}
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
