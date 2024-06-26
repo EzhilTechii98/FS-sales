@@ -5,10 +5,8 @@ class InputValidator {
     if (Validations.isEmpty(value)) {
       return 'Please enter your email address';
     }
-    if(value!.length < 3){
-      return 'Please enter above 3 characters';
-    } else {
-      return null;
+    if (!Validations.isValidEmail(value)) {
+      return 'Please enter a correct email address';
     }
   }
 
@@ -32,6 +30,7 @@ class InputValidator {
       return null;
     }
   }
+
   static String? projectName(String? value) {
     if (Validations.isEmpty(value)) {
       return 'Please enter your project name';

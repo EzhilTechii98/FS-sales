@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
-import '../../sqlite/login_sqlite.dart';
+import '../../sqlite/employee_sqlite_db.dart';
 import '../../utils/appBar.dart';
 import '../../utils/color_resources.dart';
 import 'Dashboard_bloc.dart';
@@ -21,7 +21,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   late DashboardBloc bloc;
-  final DatabaseHelper dbHelper = DatabaseHelper();
+  // final DatabaseHelper dbHelper = DatabaseHelper();
   String userName = '';
 
 
@@ -29,7 +29,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<DashboardBloc>(context);
-    loadJsonData(dbHelper);
+    // loadJsonData(dbHelper);
   }
 
   @override

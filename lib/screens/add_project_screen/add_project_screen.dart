@@ -1,8 +1,10 @@
 
+import 'package:dms_dealers/screens/add_project_screen/add_project_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../base/base_state.dart';
+import '../../router.dart';
 import '../../utils/app_utils.dart';
 import '../../utils/base_search_field.dart';
 import '../../utils/color_resources.dart';
@@ -32,8 +34,6 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   TextEditingController clientEmailController = TextEditingController();
   TextEditingController clientPhoneController = TextEditingController();
 
-
-
   @override
   void initState() {
     super.initState();
@@ -44,7 +44,18 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   Widget build(BuildContext context) {
     return BlocListener(
       bloc: bloc,
-      listener: (BuildContext context, BaseState state) async {},
+      listener: (BuildContext context, BaseState state) async {
+        if (state is SuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.successResponse)),
+          );
+          Navigator.pushNamed(context, AppRoutes.projects);
+        } else if (state is FailureState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
+        }
+      },
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
@@ -222,7 +233,17 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                           child: CustomButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                print('new');
+                                bloc.add(
+                                  SaveProjectDetailsEvent(
+                                    projectName: projectNameController.text,
+                                    industry: industryController.text,
+                                    technology: technologyController.text,
+                                    projectManager: projectManagerController.text,
+                                    clientName: clientNameController.text,
+                                    clientEmailAddress: clientEmailController.text,
+                                    clientPhoneNumber: clientPhoneController.text,
+                                  ),
+                                );
                               }
                               },
                             text: 'Update',

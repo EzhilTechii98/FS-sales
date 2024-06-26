@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../base/base_state.dart';
 import '../../router.dart';
-import '../../sqlite/login_sqlite.dart';
+import '../../sqlite/employee_sqlite_db.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/base_button.dart';
 import '../../utils/image_resources.dart';
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   TextEditingController mobileNo = TextEditingController();
-  final DatabaseHelper dbHelper = DatabaseHelper();
+  // final DatabaseHelper dbHelper = DatabaseHelper();
   final String correctPassword = '123456';
   String? defaultEmailDomain = '@flyerssoft.com';
 
@@ -47,23 +47,23 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<LoginBloc>(context);
-    loadJsonData(dbHelper);
+    // loadJsonData(dbHelper);
   }
 
-  void login() async {
-    final String email = emailController.text + defaultEmailDomain!;
-    final String password = passwordController.text;
-
-     final user = await dbHelper.getUser(email);
-
-    if (user != null && password == correctPassword) {
-
-      Navigator.pushNamed(context, AppRoutes.dashboardScreen,arguments: user);
-
-    } else {
-      AppUtils.showToast('Invalid username or password');
-    }
-  }
+  // void login() async {
+  //   final String email = emailController.text + defaultEmailDomain!;
+  //   final String password = passwordController.text;
+  //
+  //    final user = await dbHelper.getUser(email);
+  //
+  //   if (user != null && password == correctPassword) {
+  //
+  //     Navigator.pushNamed(context, AppRoutes.dashboardScreen,arguments: user);
+  //
+  //   } else {
+  //     AppUtils.showToast('Invalid username or password');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: CustomButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      login();
+                      Navigator.pushNamed(context, AppRoutes.dashboardScreen);
+
+                      // login();
                       // login(emailController.text, passwordController.text);
                     }
                   },

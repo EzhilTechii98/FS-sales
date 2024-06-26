@@ -1,3 +1,5 @@
+import 'package:dms_dealers/router.dart';
+import 'package:dms_dealers/sqlite/employee_sqlite_db.dart';
 import 'package:dms_dealers/utils/app_utils.dart';
 import 'package:dms_dealers/utils/base_textForm_field.dart';
 import 'package:dms_dealers/utils/validation.dart';
@@ -9,10 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multi_dropdown/multiselect_dropdown.dart';
 
 import '../../base/base_state.dart';
+import '../../main.dart';
 import '../../utils/base_search_field.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/base_button.dart';
 import 'employee_detail_bloc.dart';
+import 'employee_detail_event.dart';
 
 class EmployeeDetailsScreen extends StatefulWidget {
   const EmployeeDetailsScreen({Key? key}) : super(key: key);
@@ -33,15 +37,9 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   TextEditingController industryController = TextEditingController();
   TextEditingController technologyController = TextEditingController();
 
-  List<ValueItem> _selectedOptions = [];
+  bool _isChecked = false;
 
-  final List<ValueItem> _options = [
-    const ValueItem(label: 'ios ', value: '1'),
-    const ValueItem(label: 'android ', value: '2'),
-    const ValueItem(label: 'ios', value: '3'),
-    const ValueItem(label: 'flutter', value: '4'),
-    const ValueItem(label: 'xamarin', value: '5'),
-  ];
+
 
   @override
   void initState() {
@@ -59,6 +57,17 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
     return BlocListener(
       bloc: bloc,
       listener: (BuildContext context, BaseState state) async {
+        if (state is SuccessState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.successResponse)),
+          );
+          Navigator.pop(context);
+         Navigator.pushNamed(context, AppRoutes.employeeList);
+        } else if (state is FailureState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.errorMessage)),
+          );
+        }
 
       },
       child: BlocBuilder(
@@ -145,8 +154,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                               //Industry
                               const CustomTextStyle(text: 'Email Address'),
                               CustomTextForm(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 hintText: '',
                                 labelText: '',
                                 controller: emailAddressController,
@@ -236,8 +244,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
 
                               const CustomTextStyle(text: 'Project Manager'),
                               CustomTextForm(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 hintText: '',
                                 labelText: '',
                                 validator: InputValidator.firstName,
@@ -309,6 +316,16 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                 suffixIcon:
                                     const Icon(Icons.keyboard_arrow_down),
                               ),
+                              CheckboxListTile(
+                                title: Text('isAllocated'),
+                                value: _isChecked,
+                                onChanged: (bool? newValue) {
+                                  setState(() {
+                                    _isChecked = newValue!;
+                                  });
+                                },
+                                controlAffinity: ListTileControlAffinity.leading, // checkbox position
+                              ),
                             ],
                           ),
                         ),
@@ -320,9 +337,25 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                           child: CustomButton(
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
-                                print('new');
+                                print(teamController.text);
+                                print(designationController.text);
+                                print(industryController.text);
+
+                                bloc.add(
+                                  SaveEmployeeDetailsEvent(
+                                    employeeName: employeeNameController.text,
+                                    emailAddress: emailAddressController.text,
+                                    phoneNumber: phoneNumberController.text,
+                                    team: teamController.text,
+                                    designation: designationController.text,
+                                    projectManager: projectManagerController.text,
+                                    industry: industryController.text,
+                                    technology: technologyController.text,
+                                    allocated: _isChecked
+
+                                  ),
+                                );
                               }
-                              // Add your button onPressed logic here
                             },
                             text: 'Update',
                           ),

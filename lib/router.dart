@@ -25,12 +25,14 @@ import 'package:dms_dealers/screens/resources_allocation_screen/res_allocation_s
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_bloc.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_event.dart';
 import 'package:dms_dealers/screens/unallocated_resources/unallocated_screen.dart';
+import 'package:dms_dealers/sqlite/employee_sqlite_db.dart';
 import 'package:dms_dealers/utils/color_resources.dart';
 import 'package:dms_dealers/utils/perference_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'authenticatiom/bloc/authentication_bloc.dart';
 import 'authenticatiom/bloc/authentication_state.dart';
+
 
 class AppRoutes {
   static const String dashboardScreen = 'dashboard_screen';
@@ -153,6 +155,7 @@ class PageBuilder {
   }
 
   static Widget buildEmployeeDetails() {
+    print('====================');
     return BlocProvider(
         create: (BuildContext context) => EmployeeDetailsBloc()
           ..add(EmployeeDetailsInitialEvent(context: context)),
