@@ -22,7 +22,7 @@ class InputValidator {
 
   static String? firstName(String? value) {
     if (Validations.isEmpty(value)) {
-      return 'Please enter your first name';
+      return 'Please enter your name';
     }
     if(value!.length < 3){
       return 'Please enter above 3 characters';
@@ -39,7 +39,11 @@ class InputValidator {
   }
 
   static String? phoneNumber(String? value) {
-    if (Validations.isEmpty(value)) return 'Please enter your phone number';
+    if (Validations.isEmpty(value)){
+      return 'Please enter your phone number';
+    } else if(value!.length < 10) {
+      return 'Please enter your 10digits phone number ';
+    }
     return null;
   }
 

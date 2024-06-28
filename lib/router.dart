@@ -61,7 +61,7 @@ Route<dynamic>? getRoute(RouteSettings settings) {
     case AppRoutes.unallocated:
       return _buildUnAllocated();
     case AppRoutes.employeeDetails:
-      return _buildEmployeeDetails();
+      return _buildEmployeeDetails(arguments: settings);
     case AppRoutes.addProjectsScreen:
       return _buildAddProjectsScreen();
     case AppRoutes.resourcesAllocationScreen:
@@ -96,9 +96,9 @@ Route<dynamic> _buildUnAllocated() {
   return MaterialPageRoute(
       builder: (BuildContext context) => PageBuilder.buildUnAllocated());
 }
-Route<dynamic> _buildEmployeeDetails() {
+Route<dynamic> _buildEmployeeDetails({RouteSettings? arguments}) {
   return MaterialPageRoute(
-      builder: (BuildContext context) => PageBuilder.buildEmployeeDetails());
+      builder: (BuildContext context) => PageBuilder.buildEmployeeDetails(arguments: arguments));
 }
 Route<dynamic> _buildAddProjectsScreen() {
   return MaterialPageRoute(
@@ -154,12 +154,14 @@ class PageBuilder {
         child: const UnAllocatedScreen());
   }
 
-  static Widget buildEmployeeDetails() {
-    print('====================');
+  static Widget buildEmployeeDetails({RouteSettings? arguments}) {
+    Object? tempEmployeeList;
+    tempEmployeeList = arguments!.arguments;
+    print('========Employee============$tempEmployeeList');
     return BlocProvider(
         create: (BuildContext context) => EmployeeDetailsBloc()
-          ..add(EmployeeDetailsInitialEvent(context: context)),
-        child: const EmployeeDetailsScreen());
+          ..add(EmployeeDetailsInitialEvent(arguments: tempEmployeeList)),
+        child:  EmployeeDetailsScreen());
   }
 
   static Widget buildAddProjectsScreen() {

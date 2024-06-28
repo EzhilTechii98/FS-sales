@@ -8,10 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_dropdown/multiselect_dropdown.dart';
-
 import '../../base/base_state.dart';
-import '../../main.dart';
+import '../../model/employee_model.dart';
 import '../../utils/base_search_field.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/base_button.dart';
@@ -19,7 +17,9 @@ import 'employee_detail_bloc.dart';
 import 'employee_detail_event.dart';
 
 class EmployeeDetailsScreen extends StatefulWidget {
-  const EmployeeDetailsScreen({Key? key}) : super(key: key);
+ late List<Employee> employee = [];
+
+   EmployeeDetailsScreen({Key? key}) : super(key: key);
 
   @override
   _EmployeeDetailsScreenState createState() => _EmployeeDetailsScreenState();
@@ -45,6 +45,13 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   void initState() {
     super.initState();
     bloc = BlocProvider.of<EmployeeDetailsBloc>(context);
+     // print(widget.employee.first.allocated);
+   // print(bloc.getNewEmployee!.technology);
+    if(emailAddressController.text.isNotEmpty) {
+      emailAddressController.text = bloc.getNewEmployee!.email;
+    }
+    print(bloc.getNewEmployee!.email);
+
   }
 
   @override
@@ -58,6 +65,8 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
       bloc: bloc,
       listener: (BuildContext context, BaseState state) async {
         if (state is SuccessState) {
+            emailAddressController.text = bloc.getNewEmployee!.email;
+
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.successResponse)),
           );
@@ -125,17 +134,17 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                           key: _formKey,
                           child: ListView(
                             children: [
-                              const Center(
-                                child: CircleAvatar(
-                                  radius: 40.0,
-                                  backgroundColor: Colors.grey,
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 40.0,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
+                              // const Center(
+                              //   child: CircleAvatar(
+                              //     radius: 40.0,
+                              //     backgroundColor: Colors.grey,
+                              //     child: Icon(
+                              //       Icons.person,
+                              //       size: 40.0,
+                              //       color: Colors.white,
+                              //     ),
+                              //   ),
+                              // ),
                               const CustomTextStyle(text: 'Employee Name'),
                               CustomTextForm(
                                 autovalidateMode:
@@ -247,7 +256,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
                                 hintText: '',
                                 labelText: '',
-                                validator: InputValidator.firstName,
+                                validator: InputValidator.projectManager,
                                 controller: projectManagerController,
                                 // suffixIcon: Icon(Icons.keyboard_arrow_down),
                               ),
@@ -336,13 +345,13 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                           width: MediaQuery.of(context).size.width,
                           child: CustomButton(
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                               if (_formKey.currentState!.validate()) {
                                 print(teamController.text);
                                 print(designationController.text);
                                 print(industryController.text);
+                                print('------ ischecked ${_isChecked}');
 
-                                bloc.add(
-                                  SaveEmployeeDetailsEvent(
+                                bloc.add(SaveEmployeeDetailsEvent(
                                     employeeName: employeeNameController.text,
                                     emailAddress: emailAddressController.text,
                                     phoneNumber: phoneNumberController.text,
@@ -351,11 +360,10 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                     projectManager: projectManagerController.text,
                                     industry: industryController.text,
                                     technology: technologyController.text,
-                                    allocated: _isChecked
-
+                                    allocated: _isChecked == true ?0 : 1
                                   ),
                                 );
-                              }
+                               }
                             },
                             text: 'Update',
                           ),

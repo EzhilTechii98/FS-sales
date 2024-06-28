@@ -1,6 +1,4 @@
-
 import 'package:flutter/cupertino.dart';
-
 import '../../utils/base_equatable.dart';
 
 abstract class EmployeeDetailsEvent extends BaseEquatable {}
@@ -9,7 +7,7 @@ class EmployeeDetailsInitialEvent extends EmployeeDetailsEvent {
   BuildContext? context;
   dynamic arguments;
 
-  EmployeeDetailsInitialEvent({this.context});
+  EmployeeDetailsInitialEvent({this.context, this.arguments});
 
 }
 
@@ -24,7 +22,7 @@ class SaveEmployeeDetailsEvent extends EmployeeDetailsEvent {
   final String projectManager;
   final String industry;
   final String technology;
-  final bool allocated;
+  final int allocated;
 
   SaveEmployeeDetailsEvent({
     this.context,

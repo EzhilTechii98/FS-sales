@@ -5,6 +5,7 @@ import 'package:dms_dealers/utils/appBar.dart';
 import 'package:dms_dealers/utils/hookup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -171,38 +172,52 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                 const SizedBox(height: 5),
                                                 Row(
                                                   children: [
-                                                    ElevatedButton(
-                                                      style: ButtonStyle(
-                                                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                                          const EdgeInsets.symmetric(horizontal:12.0),
-                                                        ),
-                                                        minimumSize: MaterialStateProperty.all<Size>(const Size(64, 30)),
-                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(15.0),
-                                                            side:  const BorderSide(color: ColorResource.color1DD79F),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      onPressed: () {},
-                                                      child: Text(projects.technology),
-                                                    ),
+                                                    // ElevatedButton(
+                                                    //   style: ButtonStyle(
+                                                    //     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                    //       const EdgeInsets.symmetric(horizontal:12.0),
+                                                    //     ),
+                                                    //     minimumSize: MaterialStateProperty.all<Size>(const Size(64, 30)),
+                                                    //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                    //       RoundedRectangleBorder(
+                                                    //         borderRadius: BorderRadius.circular(15.0),
+                                                    //         side:  const BorderSide(color: ColorResource.color1DD79F),
+                                                    //       ),
+                                                    //     ),
+                                                    //   ),
+                                                    //   onPressed: () {},
+                                                    //   child: Text(projects.technology),
+                                                    // ),
                                                     const SizedBox(width: 8,),
-                                                    ElevatedButton(
-                                                      style: ButtonStyle(
-                                                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                                          const EdgeInsets.symmetric(horizontal:12.0),
-                                                        ),
-                                                        minimumSize: MaterialStateProperty.all<Size>(const Size(64, 30)),
-                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                          RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(15.0),
-                                                            side:  const BorderSide(color: ColorResource.color1DD79F),
-                                                          ),
-                                                        ),
+                                                    SizedBox(
+                                                      height: 20,
+                                                      width: 300,
+                                                      child: ListView.separated(
+                                                          // physics: NeverScrollableScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                          scrollDirection: Axis.horizontal,
+                                                        itemCount: 5,
+                                                        itemBuilder: (BuildContext context, int index) {
+                                                          return ElevatedButton(
+                                                            style: ButtonStyle(
+                                                              padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                                                const EdgeInsets.symmetric(horizontal:12.0),
+                                                              ),
+                                                              minimumSize: MaterialStateProperty.all<Size>(const Size(64, 30)),
+                                                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder(
+                                                                  borderRadius: BorderRadius.circular(15.0),
+                                                                  side:  const BorderSide(color: ColorResource.color1DD79F),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            onPressed: () {},
+                                                            child: const Text('Flutter'),
+                                                          );
+                                                        }, separatorBuilder: (BuildContext context, int index) {
+                                                          return SizedBox(width: 5,);
+                                                      },
                                                       ),
-                                                      onPressed: () {},
-                                                      child: const Text('Flutter'),
                                                     ),
                                                     Spacer(),
                                                     Icon(_cardExpandedState[index]

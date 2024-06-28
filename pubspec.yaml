@@ -84,7 +84,6 @@ flutter:
   assets:
     - assets/
     - assets/png/
-    - assets/users.json
 
   fonts:
     - family: Poppins
