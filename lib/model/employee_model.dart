@@ -9,7 +9,7 @@ class Employee {
   late String reportingManager;
   late String industry;
   late String technology;
-  bool? allocated;
+  int? allocated;
 
   Employee(this.id,
       this.username,

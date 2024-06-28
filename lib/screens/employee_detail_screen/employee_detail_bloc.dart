@@ -4,11 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
 import '../../main.dart';
+import '../../model/employee_model.dart';
 import 'employee_detail_event.dart';
 
 class EmployeeDetailsBloc extends Bloc<EmployeeDetailsEvent, BaseState> {
 
    EmployeeDetailsBloc() : super(InitialState());
+
+    Employee? getNewEmployee;
 
 
   @override
@@ -17,9 +20,18 @@ class EmployeeDetailsBloc extends Bloc<EmployeeDetailsEvent, BaseState> {
       ) async* {
     if (event is EmployeeDetailsInitialEvent) {
       yield LoadingState();
+       if(event.arguments == null) {
+         yield SuccessState(successResponse: 'success');
+       } else {
+         getNewEmployee = event.arguments;
+       }
+
+
+
     }
     else if (event is SaveEmployeeDetailsEvent) {
       yield LoadingState();
+      print('========= ${event.allocated}');
 
       // Save the employee details to the database
       Map<String, dynamic> row = {
@@ -31,7 +43,10 @@ class EmployeeDetailsBloc extends Bloc<EmployeeDetailsEvent, BaseState> {
         DatabaseHelper.employeePM: event.projectManager,
         DatabaseHelper.employeeIndustry: event.industry,
         DatabaseHelper.employeeTechnology: event.technology,
+        DatabaseHelper.employeeAllocated : event.allocated
       };
+
+      print('+++++++++= ${row}');
 
       final result = await dbHelper.insertEmployeeDetails(
           row, DatabaseHelper.employeesDetailsTable);

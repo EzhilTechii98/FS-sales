@@ -40,7 +40,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
   Widget build(BuildContext context) {
     return BlocListener(
       bloc: bloc,
-      listener: (BuildContext context, BaseState state) async {},
+      listener: (BuildContext context, BaseState state) async {
+
+      },
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
@@ -86,6 +88,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                             ),
                             ElevatedButton(
                               onPressed: () {
+                                // Navigator.pop(context);
                                 Navigator.pushNamed(
                                     context, AppRoutes.employeeDetails);
                               },
@@ -120,18 +123,22 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         ),
                         // SizedBox(height: 20),
                         Expanded(
-                            child: employees.isNotEmpty
-                                ? ListView.builder(
+                            child:
+                            employees.isNotEmpty ?
+                            ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: employees.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
+                                    itemBuilder: (BuildContext context, int index) {
                                       Employee employee = employees[index];
-                                      print(employee.allocated);
-                                      print(employee.team);
+                                     print(employee.allocated);
+                                      debugPrint(employee.team);
                                       print(employee.designation);
                                       return Card(
                                         child: ListTile(
+                                          onTap: () {
+                                            print('==========');
+                                            Navigator.pushNamed(context, AppRoutes.employeeDetails,arguments: employee);
+                                          },
                                           leading: const Stack(
                                             children: [
                                               CircleAvatar(
@@ -154,9 +161,9 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                                 width: 5,
                                               ),
                                               SvgPicture.asset(
-                                                employee.allocated == true ?
-                                                ImageResource.red :
-                                                ImageResource.green,
+                                                employee.allocated == 0
+                                                    ? ImageResource.red
+                                                    : ImageResource.green,
                                                 width: 10,
                                                 height: 10,
                                               ),
@@ -192,74 +199,110 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
                                           // trailing: const Icon(Icons.done),
                                           subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
-                                                  ElevatedButton(
-                                                    style: ButtonStyle(
-                                                      padding:
-                                                          MaterialStateProperty.all<
-                                                              EdgeInsetsGeometry>(
-                                                        const EdgeInsets
-                                                            .symmetric(
-                                                            horizontal: 12.0),
-                                                      ),
-                                                      minimumSize:
-                                                          MaterialStateProperty
-                                                              .all<Size>(
-                                                                  Size(64, 30)),
-                                                      shape: MaterialStateProperty
-                                                          .all<
-                                                              RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      15.0),
-                                                          side: const BorderSide(
-                                                              color: ColorResource
-                                                                  .color1DD79F),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    onPressed: () {},
-                                                    child: Text(
-                                                      employee.designation ??
-                                                          '',
-                                                    ),
-                                                  ),
                                                   SizedBox(
+                                                    height : 30,
+                                                    width:  100,
+                                                    child: ListView.separated(
+                                                        shrinkWrap: true,
+                                                        scrollDirection: Axis.horizontal,
+                                                      itemCount :1,
+                                                      itemBuilder: (BuildContext context, int index) {
+                                                        return ElevatedButton(
+                                                          style: ButtonStyle(
+                                                            padding:
+                                                                MaterialStateProperty.all<
+                                                                    EdgeInsetsGeometry>(
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  horizontal: 12.0),
+                                                            ),
+                                                            minimumSize:
+                                                                MaterialStateProperty
+                                                                    .all<Size>(
+                                                                        Size(64, 30)),
+                                                            shape: MaterialStateProperty
+                                                                .all<
+                                                                    RoundedRectangleBorder>(
+                                                              RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15.0),
+                                                                side: const BorderSide(
+                                                                    color: ColorResource
+                                                                        .color1DD79F),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          onPressed: () {},
+                                                          child: Text(
+                                                            employee.technology ??
+                                                                '',
+                                                          ),
+                                                        );
+                                                      }, separatorBuilder: (BuildContext context, int index) {
+                                                          return SizedBox(width: 6,);
+                                                    },
+                                                    ),
+
+
+                                                  ),
+                                                  const SizedBox(
                                                     width: 10,
                                                   ),
-
-                                                  /*  ElevatedButton(
-                                            style: ButtonStyle(
-                                              padding: MaterialStateProperty.all<
-                                                  EdgeInsetsGeometry>(
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 12.0),
-                                              ),
-                                              minimumSize:
-                                              MaterialStateProperty.all<Size>(
-                                                  Size(64, 30)),
-                                              shape: MaterialStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                                  side: const BorderSide(
-                                                      color: ColorResource.colorB11DD7),
-                                                ),
-                                              ),
-                                            ),
-                                            onPressed: () {},
-                                            child: const Text('Finance',
-                                              overflow: TextOverflow.clip,
-                                            ),
-                                          ),*/
                                                 ],
+                                              ),
+                                              SizedBox(height: 5,),
+                                              SizedBox(
+                                                height : 30,
+                                                width: 300 ,
+                                                child: ListView.separated(
+                                                  shrinkWrap: true,
+                                                  scrollDirection: Axis.horizontal,
+                                                  itemCount :1,
+                                                  itemBuilder: (BuildContext context, int index) {
+                                                    return ElevatedButton(
+                                                      style: ButtonStyle(
+                                                        padding:
+                                                        MaterialStateProperty.all<
+                                                            EdgeInsetsGeometry>(
+                                                          const EdgeInsets
+                                                              .symmetric(
+                                                              horizontal: 12.0),
+                                                        ),
+                                                        minimumSize:
+                                                        MaterialStateProperty
+                                                            .all<Size>(
+                                                            Size(64, 30)),
+                                                        shape: MaterialStateProperty
+                                                            .all<
+                                                            RoundedRectangleBorder>(
+                                                          RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                15.0),
+                                                            side: const BorderSide(
+                                                                color: ColorResource
+                                                                    .color1DD79F),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onPressed: () {},
+                                                      child: Text(
+                                                        employee.industry ??
+                                                            '',
+                                                      ),
+                                                    );
+                                                  }, separatorBuilder: (BuildContext context, int index) {
+                                                  return SizedBox(width: 6,);
+                                                },
+                                                ),
                                               ),
                                               const SizedBox(
                                                 height: 6,
@@ -289,16 +332,15 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                             ],
                                           ),
                                           selected: true,
-                                          onTap: () {
-                                            setState(() {});
-                                          },
+
                                         ),
                                       );
                                     },
                                   )
-                                : Center(
+                                : const Center(
                                     child: Text('There is No Employees'),
-                                  ))
+                                  )
+                        )
                       ],
                     ),
                   ),
