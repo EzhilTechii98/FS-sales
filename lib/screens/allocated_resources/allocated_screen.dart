@@ -1,11 +1,8 @@
-import 'package:dms_dealers/utils/appBar.dart';
 import 'package:dms_dealers/utils/hookup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../base/base_state.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/base_textForm_field.dart';
@@ -21,7 +18,7 @@ class AllocatedScreen extends StatefulWidget {
 
 class _AllocatedScreenState extends State<AllocatedScreen> {
   late AllocatedBloc bloc;
-  List<bool> _cardExpandedState = [
+  final List<bool> _cardExpandedState = [
     false,
     false
   ]; // State to track card expansion
@@ -49,7 +46,7 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
               child: Scaffold(
                   backgroundColor: Colors.grey.shade200,
                   body: Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: SizedBox(
                         height: MediaQuery.of(context).size.height,
                         child: Column(
@@ -76,7 +73,7 @@ class _AllocatedScreenState extends State<AllocatedScreen> {
                                 ],
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             const Row(

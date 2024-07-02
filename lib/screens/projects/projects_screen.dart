@@ -14,6 +14,7 @@ import '../../base/base_state.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/base_textForm_field.dart';
 import '../../utils/image_resources.dart';
+import '../../widgets/singleTon.dart';
 import 'projects_bloc.dart';
 
 class ProjectsScreen extends StatefulWidget {
@@ -93,6 +94,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                     ),
                                     ElevatedButton(
                                         onPressed: () {
+                                          MFRIFlashSingleton.instance.isProjectUpdate = false;
                                           Navigator.pushNamed(context, AppRoutes.addProjectsScreen);
                                         },
                                         style: ButtonStyle(
@@ -131,9 +133,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                       ProjectListModel projects = projectList[index];
                                       return GestureDetector(
                                         onTap: () {
-                                          setState(() {
-                                            _cardExpandedState[index] = !_cardExpandedState[index];
-                                          });
+                                          MFRIFlashSingleton.instance.isProjectUpdate = true;
+                                          Navigator.pushNamed(context, AppRoutes.addProjectsScreen,arguments: projects);
+
+
                                         },
                                         child: Card(
                                           child: Padding(
@@ -171,6 +174,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                 ),
                                                 const SizedBox(height: 5),
                                                 Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
                                                     // ElevatedButton(
                                                     //   style: ButtonStyle(
@@ -190,13 +194,13 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                     // ),
                                                     const SizedBox(width: 8,),
                                                     SizedBox(
-                                                      height: 20,
-                                                      width: 300,
+                                                      height: 28,
+                                                      width: 270,
                                                       child: ListView.separated(
                                                           // physics: NeverScrollableScrollPhysics(),
                                                         shrinkWrap: true,
                                                           scrollDirection: Axis.horizontal,
-                                                        itemCount: 5,
+                                                        itemCount: 1,
                                                         itemBuilder: (BuildContext context, int index) {
                                                           return ElevatedButton(
                                                             style: ButtonStyle(
@@ -212,7 +216,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                               ),
                                                             ),
                                                             onPressed: () {},
-                                                            child: const Text('Flutter'),
+                                                            child:  Text(projects.technology),
                                                           );
                                                         }, separatorBuilder: (BuildContext context, int index) {
                                                           return SizedBox(width: 5,);
@@ -220,9 +224,18 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                       ),
                                                     ),
                                                     Spacer(),
-                                                    Icon(_cardExpandedState[index]
-                                                        ? Icons.keyboard_arrow_up
-                                                        : Icons.keyboard_arrow_down),
+                                                    IconButton(onPressed: () {
+                                                      setState(() {
+                                                        _cardExpandedState[index] = !_cardExpandedState[index];
+                                                      });
+                                                    }, icon: Icon(
+                                                        _cardExpandedState[index]
+                                                            ? Icons.keyboard_arrow_up
+                                                            : Icons.keyboard_arrow_down
+                                                    ))
+                                                    // Icon(_cardExpandedState[index]
+                                                    //     ? Icons.keyboard_arrow_up
+                                                    //     : Icons.keyboard_arrow_down),
                                                   ],
                                                 ),
                                                 if (_cardExpandedState[index]) // Conditional rendering

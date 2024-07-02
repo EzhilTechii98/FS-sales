@@ -9,7 +9,7 @@ class ProjectsInitialEvent extends ProjectsEvent {
   BuildContext? context;
   dynamic arguments;
 
-  ProjectsInitialEvent({this.context});
+  ProjectsInitialEvent({this.context, this.arguments});
 
 }
 

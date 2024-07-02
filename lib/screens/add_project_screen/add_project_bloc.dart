@@ -3,12 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
 import '../../main.dart';
+import '../../model/project_model.dart';
 import '../../sqlite/project_sqlite_db.dart';
 import 'add_project_event.dart';
 
 class AddProjectBloc extends Bloc<AddProjectEvent, BaseState> {
   AddProjectBloc() : super(InitialState());
 
+  ProjectListModel? getProjectList;
 
   @override
   Stream<BaseState> mapEventToState(
@@ -16,7 +18,8 @@ class AddProjectBloc extends Bloc<AddProjectEvent, BaseState> {
       ) async* {
     if (event is AddProjectInitialEvent) {
       yield LoadingState();
-      // yield SuccessState(successResponse: 'success');
+      getProjectList = event.arguments;
+       yield SuccessState(successResponse: getProjectList);
     }
     else if(event is SaveProjectDetailsEvent) {
 
@@ -39,7 +42,7 @@ class AddProjectBloc extends Bloc<AddProjectEvent, BaseState> {
       if (result > 0) {
         yield SuccessState(successResponse: 'Project details saved successfully.');
       } else {
-        yield FailureState(errorMessage: 'Failed to save employee details.');
+        yield FailureState(errorMessage: 'Failed to save project details.');
       }
     }
   }

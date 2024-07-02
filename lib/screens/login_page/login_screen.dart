@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController mobileNo = TextEditingController();
   // final DatabaseHelper dbHelper = DatabaseHelper();
   final String correctPassword = '123456';
-  String? defaultEmailDomain = '@flyerssoft.com';
+  // String? defaultEmailDomain = '@flyerssoft.com';
 
 
 
@@ -129,10 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: "Enter your email id ",
                 labelText: "Enter Email id",
                  validator: InputValidator.email,
-                 suffixText: defaultEmailDomain,
-                 onSaved: (value) {
-                   emailController.text = value! + defaultEmailDomain!;
-                 },
+                 // suffixText: defaultEmailDomain,
+                 // onSaved: (value) {
+                 //   emailController.text = value! + defaultEmailDomain!;
+                 // },
               ),
                CustomTextForm(
                   controller: passwordController,

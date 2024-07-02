@@ -6,8 +6,9 @@ abstract class EmployeeDetailsEvent extends BaseEquatable {}
 class EmployeeDetailsInitialEvent extends EmployeeDetailsEvent {
   BuildContext? context;
   dynamic arguments;
+  bool? update;
 
-  EmployeeDetailsInitialEvent({this.context, this.arguments});
+  EmployeeDetailsInitialEvent({this.context, this.arguments, this.update});
 
 }
 

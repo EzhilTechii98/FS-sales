@@ -2,7 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../base/base_state.dart';
-import 'Dashboard_event.dart';
+import 'dashboard_event.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, BaseState> {
   DashboardBloc() : super(InitialState());

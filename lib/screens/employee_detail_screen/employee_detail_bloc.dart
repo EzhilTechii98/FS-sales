@@ -14,19 +14,15 @@ class EmployeeDetailsBloc extends Bloc<EmployeeDetailsEvent, BaseState> {
     Employee? getNewEmployee;
 
 
+
   @override
   Stream<BaseState> mapEventToState(
       EmployeeDetailsEvent event,
       ) async* {
     if (event is EmployeeDetailsInitialEvent) {
       yield LoadingState();
-       if(event.arguments == null) {
-         yield SuccessState(successResponse: 'success');
-       } else {
-         getNewEmployee = event.arguments;
-       }
-
-
+      getNewEmployee = event.arguments;
+      yield SuccessState(successResponse: getNewEmployee);
 
     }
     else if (event is SaveEmployeeDetailsEvent) {

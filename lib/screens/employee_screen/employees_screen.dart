@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:dms_dealers/router.dart';
 import 'package:dms_dealers/utils/base_textForm_field.dart';
+import 'package:dms_dealers/widgets/singleTon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -89,6 +90,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                             ElevatedButton(
                               onPressed: () {
                                 // Navigator.pop(context);
+
+                                MFRIFlashSingleton.instance.isUpdated = false;
                                 Navigator.pushNamed(
                                     context, AppRoutes.employeeDetails);
                               },
@@ -137,6 +140,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                         child: ListTile(
                                           onTap: () {
                                             print('==========');
+                                            MFRIFlashSingleton.instance.isUpdated = true;
                                             Navigator.pushNamed(context, AppRoutes.employeeDetails,arguments: employee);
                                           },
                                           leading: const Stack(
@@ -206,7 +210,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                                 children: [
                                                   SizedBox(
                                                     height : 30,
-                                                    width:  100,
+                                                    width:  200,
                                                     child: ListView.separated(
                                                         shrinkWrap: true,
                                                         scrollDirection: Axis.horizontal,
@@ -289,7 +293,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                                                 15.0),
                                                             side: const BorderSide(
                                                                 color: ColorResource
-                                                                    .color1DD79F),
+                                                                    .colorB11DD7),
                                                           ),
                                                         ),
                                                       ),
