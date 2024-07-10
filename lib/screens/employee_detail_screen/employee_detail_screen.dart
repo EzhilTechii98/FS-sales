@@ -4,6 +4,7 @@ import 'package:dms_dealers/utils/app_utils.dart';
 import 'package:dms_dealers/utils/base_textForm_field.dart';
 import 'package:dms_dealers/utils/validation.dart';
 import 'package:dms_dealers/widgets/singleTon.dart';
+import 'package:dms_dealers/widgets/single_selection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,7 +68,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
       listener: (BuildContext context, BaseState state) async {
         if (state is SuccessState) {
           if (state.successResponse is Employee) {
-            print(' ++++Enter these success line ++++++ ');
+            print(' ++++++ Enter these success line ++++++ ');
             print(bloc.getNewEmployee!.allocated);
 
             // if (bloc.getNewEmployee != null) {
@@ -76,10 +77,8 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
               phoneNumberController.text = bloc.getNewEmployee!.phoneNumber;
               teamController.text = bloc.getNewEmployee!.team;
               designationController.text = bloc.getNewEmployee!.designation;
-              projectManagerController.text =
-                  bloc.getNewEmployee!.reportingManager;
+              projectManagerController.text = bloc.getNewEmployee!.reportingManager;
               industryController.text = bloc.getNewEmployee!.industry;
-
               technologyController.text = bloc.getNewEmployee!.technology;
               // bloc.getNewEmployee!.allocated == 1 ?   true :   false;
               if(bloc.getNewEmployee!.allocated == 1) {
@@ -106,11 +105,6 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
-            if (state is InitialState) {
-              return const Center(
-                child: Text(''),
-              );
-            } else if (state is SuccessState) {}
             return SafeArea(
               child: Scaffold(
                   body: Padding(
@@ -156,17 +150,6 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                           key: _formKey,
                           child: ListView(
                             children: [
-                              // const Center(
-                              //   child: CircleAvatar(
-                              //     radius: 40.0,
-                              //     backgroundColor: Colors.grey,
-                              //     child: Icon(
-                              //       Icons.person,
-                              //       size: 40.0,
-                              //       color: Colors.white,
-                              //     ),
-                              //   ),
-                              // ),
                               const CustomTextStyle(text: 'Employee Name'),
                               CustomTextForm(
                                 autovalidateMode:
@@ -216,23 +199,15 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                     AutovalidateMode.onUserInteraction,
                                 readOnly: true,
                                 onTap: () {
-                                  List<String> _selectedOptions = [];
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return SearchableCheckboxListDialog(
-                                        options: const [
-                                          'Mobile',
-                                          'React',
-                                          'backend'
-                                        ],
-                                        selectedOptions: _selectedOptions,
-                                        onChanged:
-                                            (List<String> selectedOptions) {
+                                      return SingleSelectionDialog(
+                                        options: const ['Mobile', 'React', 'Backend'],
+                                        selectedOption: teamController.text,
+                                        onChanged: (String selectedOption) {
                                           setState(() {
-                                            _selectedOptions = selectedOptions;
-                                            teamController.text =
-                                                _selectedOptions.join(', ');
+                                            teamController.text = selectedOption;
                                           });
                                         },
                                       );
@@ -254,29 +229,48 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                 readOnly: true,
                                 validator: InputValidator.designation,
                                 onTap: () {
-                                  List<String> _selectedOptions = [];
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return SearchableCheckboxListDialog(
+                                      return SingleSelectionDialog(
                                         options: const [
-                                          'Software',
-                                          'AssociateSoftware',
-                                          'Tech Lead',
-                                          'Architect'
+                                        'Software',
+                                        'AssociateSoftware',
+                                        'Tech Lead',
+                                        'Architect'
                                         ],
-                                        selectedOptions: _selectedOptions,
-                                        onChanged:
-                                            (List<String> selectedOptions) {
+                                        selectedOption: designationController.text,
+                                        onChanged: (String selectedOption) {
                                           setState(() {
-                                            _selectedOptions = selectedOptions;
-                                            designationController.text =
-                                                _selectedOptions.join(', ');
+                                            designationController.text = selectedOption;
                                           });
                                         },
                                       );
                                     },
                                   );
+                                  // List<String> _selectedOptions = [];
+                                  // showDialog(
+                                  //   context: context,
+                                  //   builder: (BuildContext context) {
+                                  //     return SearchableCheckboxListDialog(
+                                  //       options: const [
+                                  //         'Software',
+                                  //         'AssociateSoftware',
+                                  //         'Tech Lead',
+                                  //         'Architect'
+                                  //       ],
+                                  //       selectedOptions: _selectedOptions,
+                                  //       onChanged:
+                                  //           (List<String> selectedOptions) {
+                                  //         setState(() {
+                                  //           _selectedOptions = selectedOptions;
+                                  //           designationController.text =
+                                  //               _selectedOptions.join(', ');
+                                  //         });
+                                  //       },
+                                  //     );
+                                  //   },
+                                  // );
                                 },
                                 hintText: '',
                                 labelText: '',
@@ -287,12 +281,36 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
 
                               const CustomTextStyle(text: 'Project Manager'),
                               CustomTextForm(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                readOnly: true,
                                 hintText: '',
                                 labelText: '',
                                 validator: InputValidator.projectManager,
                                 controller: projectManagerController,
+                                suffixIcon:
+                                const Icon(Icons.keyboard_arrow_down),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SingleSelectionDialog(
+                                        options: const [
+                                          'Harikrishan',
+                                          'Manikandan',
+                                          'Asif',
+                                          'Sukesh',
+                                          'Vasanth'
+                                        ],
+                                        selectedOption:projectManagerController .text,
+                                        onChanged: (String selectedOption) {
+                                          setState(() {
+                                            projectManagerController.text = selectedOption;
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
                                 // suffixIcon: Icon(Icons.keyboard_arrow_down),
                               ),
 
@@ -347,11 +365,11 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                     builder: (BuildContext context) {
                                       return SearchableCheckboxListDialog(
                                         options: const [
-                                          'xamarin',
-                                          'android',
+                                          'Xamarin',
+                                          'Android',
                                           'iOS',
-                                          'flutter',
-                                          'kotlin'
+                                          'Flutter',
+                                          'Kotlin'
                                         ],
                                         selectedOptions: _selectedOptions,
                                         onChanged:
@@ -373,7 +391,7 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                     const Icon(Icons.keyboard_arrow_down),
                               ),
                               CheckboxListTile(
-                                title: Text('isAllocated'),
+                                title: const Text('Allocated'),
                                 value: _isChecked,
                                 onChanged: (bool? newValue) {
                                   setState(() {

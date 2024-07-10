@@ -43,10 +43,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return SafeArea(
               child: Scaffold(
                   appBar: AppBar(
-                    title: const Text('Home Screen'),
+                    title: const Text('Dashboard Screen'),
                     actions: [
                       IconButton(
-                        icon: const Icon(Icons.menu),
+                        icon: const Icon(Icons.logout),
                         onPressed: () {},
                       ),
                     ],

@@ -23,6 +23,8 @@ class SaveProjectDetailsEvent extends AddProjectEvent {
   final String clientName;
   final String clientEmailAddress;
   final String clientPhoneNumber;
+  final String startDate;
+  final String endDate;
 
   SaveProjectDetailsEvent({
     this.context,
@@ -33,6 +35,8 @@ class SaveProjectDetailsEvent extends AddProjectEvent {
     required this.clientName,
     required this.clientEmailAddress,
     required this.clientPhoneNumber,
+    required this.startDate,
+    required this.endDate,
 
   });
 

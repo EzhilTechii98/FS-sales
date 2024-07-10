@@ -165,9 +165,10 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                                                   ],
                                                 ),
                                                 const SizedBox(height: 5),
-                                                const Text(
-                                                  '12/01/24 to present',
-                                                  style: TextStyle(
+                                                  Text(
+                                                   // 'date',
+                                                   '${projects.startDate} to ${projects.endDate}',
+                                                  style: const TextStyle(
                                                       fontSize: 14,
                                                       fontWeight: FontWeight.bold,
                                                       color: Colors.black87),

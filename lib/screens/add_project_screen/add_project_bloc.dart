@@ -33,6 +33,8 @@ class AddProjectBloc extends Bloc<AddProjectEvent, BaseState> {
         DatabaseHelper2.projectClientName: event.clientName,
         DatabaseHelper2.projectClientEmail: event.clientEmailAddress,
         DatabaseHelper2.projectClientPhone: event.clientPhoneNumber,
+        DatabaseHelper2.projectStartDate: event.startDate,
+        DatabaseHelper2.projectEndDate: event.endDate,
       };
 
 

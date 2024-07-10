@@ -106,7 +106,7 @@ class _UnAllocatedScreenState extends State<UnAllocatedScreen> {
                                           Employee employee = employees[index];
 
                                           return AbsorbPointer(
-                                        child: employee.allocated == 0
+                                           child: employee.allocated == 0
                                             ? Card(
                                           child: ListTile(
                                             leading: const CircleAvatar(

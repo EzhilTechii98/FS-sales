@@ -12,3 +12,11 @@ class AllocatedInitialEvent extends AllocatedEvent {
   AllocatedInitialEvent({this.context});
 
 }
+
+class AllocatedListEvent extends AllocatedEvent {
+  BuildContext? context;
+  dynamic arguments;
+
+  AllocatedListEvent({this.context});
+
+}

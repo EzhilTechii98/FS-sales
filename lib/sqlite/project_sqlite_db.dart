@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper2 {
   static const _databaseName = "ProjectDetailsDB.db";
-  static const _databaseVersion = 1;
+  static const _databaseVersion = 2;
 
   static const projectDetailsTable = 'project_details_table';
   static const columnId = '_id';
@@ -18,6 +18,8 @@ class DatabaseHelper2 {
   static const projectClientName = '_projectClientName';
   static const projectClientEmail = '_projectClientEmail';
   static const projectClientPhone = '_projectClientPhone';
+  static const projectStartDate = '_projectStartDate';
+  static const projectEndDate = '_projectEndDate';
 
   late Database _db;
 
@@ -38,7 +40,10 @@ class DatabaseHelper2 {
             $projectManager TEXT,
             $projectClientName TEXT,
             $projectClientEmail TEXT,
-            $projectClientPhone TEXT
+            $projectClientPhone TEXT,
+            $projectStartDate INTEGER,
+            $projectEndDate INTEGER
+
           )
           ''');
   }

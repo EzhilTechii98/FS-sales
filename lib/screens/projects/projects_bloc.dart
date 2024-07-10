@@ -38,7 +38,9 @@ class ProjectsBloc extends Bloc<ProjectsEvent, BaseState> {
             projectDetails['_projectManager'],
             projectDetails['_projectClientName'],
             projectDetails['_projectClientEmail'],
-            projectDetails['_projectClientPhone']
+            projectDetails['_projectClientPhone'],
+            projectDetails['_projectStartDate'],
+            projectDetails['_projectEndDate'],
         );
         _projectDetails!.add(ProjectModel);
       });
