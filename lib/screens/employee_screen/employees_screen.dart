@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:dms_dealers/router.dart';
 import 'package:dms_dealers/utils/base_textForm_field.dart';
+import 'package:dms_dealers/widgets/singleTon.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -40,9 +41,7 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
   Widget build(BuildContext context) {
     return BlocListener(
       bloc: bloc,
-      listener: (BuildContext context, BaseState state) async {
-
-      },
+      listener: (BuildContext context, BaseState state) async {},
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
@@ -89,6 +88,8 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                             ElevatedButton(
                               onPressed: () {
                                 // Navigator.pop(context);
+
+                                MFRIFlashSingleton.instance.isUpdated = false;
                                 Navigator.pushNamed(
                                     context, AppRoutes.employeeDetails);
                               },
@@ -123,21 +124,25 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                         ),
                         // SizedBox(height: 20),
                         Expanded(
-                            child:
-                            employees.isNotEmpty ?
-                            ListView.builder(
+                            child: employees.isNotEmpty
+                                ? ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: employees.length,
-                                    itemBuilder: (BuildContext context, int index) {
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
                                       Employee employee = employees[index];
-                                     print(employee.allocated);
+                                      print(employee.allocated);
                                       debugPrint(employee.team);
                                       print(employee.designation);
                                       return Card(
                                         child: ListTile(
                                           onTap: () {
                                             print('==========');
-                                            Navigator.pushNamed(context, AppRoutes.employeeDetails,arguments: employee);
+                                            MFRIFlashSingleton
+                                                .instance.isUpdated = true;
+                                            Navigator.pushNamed(context,
+                                                AppRoutes.employeeDetails,
+                                                arguments: employee);
                                           },
                                           leading: const Stack(
                                             children: [
@@ -199,32 +204,40 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
 
                                           // trailing: const Icon(Icons.done),
                                           subtitle: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
                                                 children: [
                                                   SizedBox(
-                                                    height : 30,
-                                                    width:  100,
+                                                    height: 30,
+                                                    width: 200,
                                                     child: ListView.separated(
-                                                        shrinkWrap: true,
-                                                        scrollDirection: Axis.horizontal,
-                                                      itemCount :1,
-                                                      itemBuilder: (BuildContext context, int index) {
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemCount: 1,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
                                                         return ElevatedButton(
                                                           style: ButtonStyle(
                                                             padding:
-                                                                MaterialStateProperty.all<
-                                                                    EdgeInsetsGeometry>(
+                                                                MaterialStateProperty
+                                                                    .all<
+                                                                        EdgeInsetsGeometry>(
                                                               const EdgeInsets
                                                                   .symmetric(
-                                                                  horizontal: 12.0),
+                                                                  horizontal:
+                                                                      12.0),
                                                             ),
                                                             minimumSize:
                                                                 MaterialStateProperty
                                                                     .all<Size>(
-                                                                        Size(64, 30)),
+                                                                        const Size(64,
+                                                                            30)),
                                                             shape: MaterialStateProperty
                                                                 .all<
                                                                     RoundedRectangleBorder>(
@@ -245,63 +258,76 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                                                 '',
                                                           ),
                                                         );
-                                                      }, separatorBuilder: (BuildContext context, int index) {
-                                                          return SizedBox(width: 6,);
-                                                    },
+                                                      },
+                                                      separatorBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        return const SizedBox(
+                                                          width: 6,
+                                                        );
+                                                      },
                                                     ),
-
-
                                                   ),
                                                   const SizedBox(
                                                     width: 10,
                                                   ),
                                                 ],
                                               ),
-                                              SizedBox(height: 5,),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
                                               SizedBox(
-                                                height : 30,
-                                                width: 300 ,
+                                                height: 30,
+                                                width: 300,
                                                 child: ListView.separated(
                                                   shrinkWrap: true,
-                                                  scrollDirection: Axis.horizontal,
-                                                  itemCount :1,
-                                                  itemBuilder: (BuildContext context, int index) {
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemCount: 1,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
                                                     return ElevatedButton(
                                                       style: ButtonStyle(
                                                         padding:
-                                                        MaterialStateProperty.all<
-                                                            EdgeInsetsGeometry>(
+                                                            MaterialStateProperty
+                                                                .all<
+                                                                    EdgeInsetsGeometry>(
                                                           const EdgeInsets
                                                               .symmetric(
                                                               horizontal: 12.0),
                                                         ),
                                                         minimumSize:
-                                                        MaterialStateProperty
-                                                            .all<Size>(
-                                                            Size(64, 30)),
+                                                            MaterialStateProperty
+                                                                .all<Size>(const Size(
+                                                                    64, 30)),
                                                         shape: MaterialStateProperty
                                                             .all<
-                                                            RoundedRectangleBorder>(
+                                                                RoundedRectangleBorder>(
                                                           RoundedRectangleBorder(
                                                             borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                15.0),
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0),
                                                             side: const BorderSide(
                                                                 color: ColorResource
-                                                                    .color1DD79F),
+                                                                    .colorB11DD7),
                                                           ),
                                                         ),
                                                       ),
                                                       onPressed: () {},
                                                       child: Text(
-                                                        employee.industry ??
-                                                            '',
+                                                        employee.industry ?? '',
                                                       ),
                                                     );
-                                                  }, separatorBuilder: (BuildContext context, int index) {
-                                                  return SizedBox(width: 6,);
-                                                },
+                                                  },
+                                                  separatorBuilder:
+                                                      (BuildContext context,
+                                                          int index) {
+                                                    return const SizedBox(
+                                                      width: 6,
+                                                    );
+                                                  },
                                                 ),
                                               ),
                                               const SizedBox(
@@ -332,24 +358,22 @@ class _EmployeesScreenState extends State<EmployeesScreen> {
                                             ],
                                           ),
                                           selected: true,
-
                                         ),
                                       );
                                     },
                                   )
                                 : const Center(
                                     child: Text('There is No Employees'),
-                                  )
-                        )
+                                  ))
                       ],
                     ),
                   ),
                 );
               } else {
-                return Text('Invalid response type from Bloc');
+                return const Text('Invalid response type from Bloc');
               }
             } else if (state is LoadingState) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (state is FailureState) {
               return Scaffold(
                 body: Center(

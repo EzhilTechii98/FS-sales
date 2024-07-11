@@ -43,8 +43,10 @@ class InputValidator {
       return 'Please enter your phone number';
     } else if(value!.length < 10) {
       return 'Please enter your 10digits phone number ';
+    } else if(value!.length >10)  {
+      return 'Please enter valid phone number only 10 digits';
     }
-    return null;
+      return null;
   }
 
   static String? projectManager(String? value) {

@@ -1,12 +1,9 @@
-import 'package:dms_dealers/utils/app_utils.dart';
 import 'package:dms_dealers/utils/base_textForm_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../base/base_state.dart';
 import '../../router.dart';
-import '../../sqlite/employee_sqlite_db.dart';
 import '../../utils/color_resources.dart';
 import '../../utils/base_button.dart';
 import '../../utils/image_resources.dart';
@@ -30,7 +27,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController mobileNo = TextEditingController();
   // final DatabaseHelper dbHelper = DatabaseHelper();
   final String correctPassword = '123456';
-  String? defaultEmailDomain = '@flyerssoft.com';
 
 
 
@@ -38,7 +34,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed
     _textEditingController.dispose();
     super.dispose();
   }
@@ -83,7 +78,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    children: <Widget>[_loginFormFields()],
+                    children: <Widget>[
+                      _loginFormFields(),
+                    ],
                   ),
                 ),
               ),
@@ -129,10 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 hintText: "Enter your email id ",
                 labelText: "Enter Email id",
                  validator: InputValidator.email,
-                 suffixText: defaultEmailDomain,
-                 onSaved: (value) {
-                   emailController.text = value! + defaultEmailDomain!;
-                 },
+                 // suffixText: defaultEmailDomain,
+                 // onSaved: (value) {
+                 //   emailController.text = value! + defaultEmailDomain!;
+                 // },
               ),
                CustomTextForm(
                   controller: passwordController,

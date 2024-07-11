@@ -12,3 +12,10 @@ class UnAllocatedInitialEvent extends UnAllocatedEvent {
   UnAllocatedInitialEvent({this.context});
 
 }
+
+class UnAllocatedEmployeeList extends UnAllocatedEvent {
+  BuildContext? context;
+  dynamic arguments;
+
+  UnAllocatedEmployeeList({this.context});
+}

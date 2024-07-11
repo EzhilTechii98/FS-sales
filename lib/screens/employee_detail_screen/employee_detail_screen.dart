@@ -3,12 +3,15 @@ import 'package:dms_dealers/sqlite/employee_sqlite_db.dart';
 import 'package:dms_dealers/utils/app_utils.dart';
 import 'package:dms_dealers/utils/base_textForm_field.dart';
 import 'package:dms_dealers/utils/validation.dart';
+import 'package:dms_dealers/widgets/singleTon.dart';
+import 'package:dms_dealers/widgets/single_selection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../base/base_state.dart';
+import '../../main.dart';
 import '../../model/employee_model.dart';
 import '../../utils/base_search_field.dart';
 import '../../utils/color_resources.dart';
@@ -17,9 +20,9 @@ import 'employee_detail_bloc.dart';
 import 'employee_detail_event.dart';
 
 class EmployeeDetailsScreen extends StatefulWidget {
- late List<Employee> employee = [];
+  late List<Employee> employee = [];
 
-   EmployeeDetailsScreen({Key? key}) : super(key: key);
+  EmployeeDetailsScreen({Key? key}) : super(key: key);
 
   @override
   _EmployeeDetailsScreenState createState() => _EmployeeDetailsScreenState();
@@ -36,22 +39,21 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
   TextEditingController projectManagerController = TextEditingController();
   TextEditingController industryController = TextEditingController();
   TextEditingController technologyController = TextEditingController();
+  int _selectedId = 0;
 
   bool _isChecked = false;
-
-
 
   @override
   void initState() {
     super.initState();
     bloc = BlocProvider.of<EmployeeDetailsBloc>(context);
-     // print(widget.employee.first.allocated);
-   // print(bloc.getNewEmployee!.technology);
-    if(emailAddressController.text.isNotEmpty) {
-      emailAddressController.text = bloc.getNewEmployee!.email;
-    }
-    print(bloc.getNewEmployee!.email);
-
+    // print(widget.employee.first.allocated);
+    // print(bloc.getNewEmployee!.technology);
+    //   if(emailAddressController.text.isNotEmpty) {
+    //     emailAddressController.text = bloc.getNewEmployee!.email;
+    //   }
+    //   print(bloc.getNewEmployee!.email);
+    //
   }
 
   @override
@@ -65,30 +67,44 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
       bloc: bloc,
       listener: (BuildContext context, BaseState state) async {
         if (state is SuccessState) {
-            emailAddressController.text = bloc.getNewEmployee!.email;
+          if (state.successResponse is Employee) {
+            print(' ++++++ Enter these success line ++++++ ');
+            print(bloc.getNewEmployee!.allocated);
 
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.successResponse)),
-          );
-          Navigator.pop(context);
-         Navigator.pushNamed(context, AppRoutes.employeeList);
+            // if (bloc.getNewEmployee != null) {
+              employeeNameController.text = bloc.getNewEmployee!.username;
+              emailAddressController.text = bloc.getNewEmployee!.email;
+              phoneNumberController.text = bloc.getNewEmployee!.phoneNumber;
+              teamController.text = bloc.getNewEmployee!.team;
+              designationController.text = bloc.getNewEmployee!.designation;
+              projectManagerController.text = bloc.getNewEmployee!.reportingManager;
+              industryController.text = bloc.getNewEmployee!.industry;
+              technologyController.text = bloc.getNewEmployee!.technology;
+              // bloc.getNewEmployee!.allocated == 1 ?   true :   false;
+              if(bloc.getNewEmployee!.allocated == 1) {
+                _isChecked = true;
+              } else {
+                _isChecked = false;
+              }
+              _selectedId = bloc.getNewEmployee!.id!;
+
+          } else if (state is String) {
+            print('----------------------');
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.successResponse)),
+            );
+            Navigator.pop(context);
+            Navigator.pushNamed(context, AppRoutes.employeeList);
+          }
         } else if (state is FailureState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.errorMessage)),
           );
         }
-
       },
       child: BlocBuilder(
           bloc: bloc,
           builder: (BuildContext context, BaseState state) {
-            if (state is InitialState) {
-              return const Center(
-                child: Text(''),
-              );
-            } else if (state is SuccessState) {
-
-            }
             return SafeArea(
               child: Scaffold(
                   body: Padding(
@@ -134,17 +150,6 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                           key: _formKey,
                           child: ListView(
                             children: [
-                              // const Center(
-                              //   child: CircleAvatar(
-                              //     radius: 40.0,
-                              //     backgroundColor: Colors.grey,
-                              //     child: Icon(
-                              //       Icons.person,
-                              //       size: 40.0,
-                              //       color: Colors.white,
-                              //     ),
-                              //   ),
-                              // ),
                               const CustomTextStyle(text: 'Employee Name'),
                               CustomTextForm(
                                 autovalidateMode:
@@ -163,7 +168,8 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                               //Industry
                               const CustomTextStyle(text: 'Email Address'),
                               CustomTextForm(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 hintText: '',
                                 labelText: '',
                                 controller: emailAddressController,
@@ -189,26 +195,24 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
 
                               const CustomTextStyle(text: 'Team'),
                               CustomTextForm(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 readOnly: true,
                                 onTap: () {
-                                  List<String> _selectedOptions = [];
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return SearchableCheckboxListDialog(
-                                          options: const ['Mobile', 'React', 'backend'],
-                                          selectedOptions: _selectedOptions,
-                                          onChanged: (List<String> selectedOptions) {
-                                            setState(() {
-                                              _selectedOptions = selectedOptions;
-                                              teamController.text = _selectedOptions.join(', ');
-                                            });
-                                          },
-                                        );
-                                      },
-                                    );
-
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SingleSelectionDialog(
+                                        options: const ['Mobile', 'React', 'Backend'],
+                                        selectedOption: teamController.text,
+                                        onChanged: (String selectedOption) {
+                                          setState(() {
+                                            teamController.text = selectedOption;
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
                                 },
                                 hintText: '',
                                 labelText: '',
@@ -216,33 +220,57 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                 validator: InputValidator.team,
                                 suffixIcon:
                                     const Icon(Icons.keyboard_arrow_down),
-
                               ),
 
                               const CustomTextStyle(text: 'Designation'),
                               CustomTextForm(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 readOnly: true,
                                 validator: InputValidator.designation,
                                 onTap: () {
-                                  List<String> _selectedOptions = [];
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return SearchableCheckboxListDialog(
-                                        options: const ['Software', 'AssociateSoftware', 'Tech Lead',
+                                      return SingleSelectionDialog(
+                                        options: const [
+                                        'Software',
+                                        'AssociateSoftware',
+                                        'Tech Lead',
                                         'Architect'
                                         ],
-                                        selectedOptions: _selectedOptions,
-                                        onChanged: (List<String> selectedOptions) {
+                                        selectedOption: designationController.text,
+                                        onChanged: (String selectedOption) {
                                           setState(() {
-                                            _selectedOptions = selectedOptions;
-                                            designationController.text = _selectedOptions.join(', ');
+                                            designationController.text = selectedOption;
                                           });
                                         },
                                       );
                                     },
                                   );
+                                  // List<String> _selectedOptions = [];
+                                  // showDialog(
+                                  //   context: context,
+                                  //   builder: (BuildContext context) {
+                                  //     return SearchableCheckboxListDialog(
+                                  //       options: const [
+                                  //         'Software',
+                                  //         'AssociateSoftware',
+                                  //         'Tech Lead',
+                                  //         'Architect'
+                                  //       ],
+                                  //       selectedOptions: _selectedOptions,
+                                  //       onChanged:
+                                  //           (List<String> selectedOptions) {
+                                  //         setState(() {
+                                  //           _selectedOptions = selectedOptions;
+                                  //           designationController.text =
+                                  //               _selectedOptions.join(', ');
+                                  //         });
+                                  //       },
+                                  //     );
+                                  //   },
+                                  // );
                                 },
                                 hintText: '',
                                 labelText: '',
@@ -254,48 +282,80 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                               const CustomTextStyle(text: 'Project Manager'),
                               CustomTextForm(
                                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                                readOnly: true,
                                 hintText: '',
                                 labelText: '',
                                 validator: InputValidator.projectManager,
                                 controller: projectManagerController,
-                                // suffixIcon: Icon(Icons.keyboard_arrow_down),
-                              ),
-
-                              const CustomTextStyle(text: 'Industry'),
-                              CustomTextForm(
-                                readOnly: true,
-                                validator:InputValidator.industries,
+                                suffixIcon:
+                                const Icon(Icons.keyboard_arrow_down),
                                 onTap: () {
-                                  List<String> _selectedOptions = [];
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return SearchableCheckboxListDialog(
-                                        options: const ['Finance', 'Marketing', 'E-commerce',
-                                          'health care'
+                                      return SingleSelectionDialog(
+                                        options: const [
+                                          'Harikrishan',
+                                          'Manikandan',
+                                          'Asif',
+                                          'Sukesh',
+                                          'Vasanth'
                                         ],
-                                        selectedOptions: _selectedOptions,
-                                        onChanged: (List<String> selectedOptions) {
+                                        selectedOption:projectManagerController .text,
+                                        onChanged: (String selectedOption) {
                                           setState(() {
-                                            _selectedOptions = selectedOptions;
-                                            industryController.text = _selectedOptions.join(', ');
+                                            projectManagerController.text = selectedOption;
                                           });
                                         },
                                       );
                                     },
                                   );
                                 },
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                // suffixIcon: Icon(Icons.keyboard_arrow_down),
+                              ),
+
+                              const CustomTextStyle(text: 'Industry'),
+                              CustomTextForm(
+                                readOnly: true,
+                                validator: InputValidator.industries,
+                                onTap: () {
+                                  List<String> _selectedOptions = [];
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SearchableCheckboxListDialog(
+                                        options: const [
+                                          'Finance',
+                                          'Marketing',
+                                          'E-commerce',
+                                          'health care'
+                                        ],
+                                        selectedOptions: _selectedOptions,
+                                        onChanged:
+                                            (List<String> selectedOptions) {
+                                          setState(() {
+                                            _selectedOptions = selectedOptions;
+                                            industryController.text =
+                                                _selectedOptions.join(', ');
+                                          });
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 hintText: '',
                                 labelText: '',
                                 controller: industryController,
-                                suffixIcon: const Icon(Icons.keyboard_arrow_down),
-
+                                suffixIcon:
+                                    const Icon(Icons.keyboard_arrow_down),
                               ),
 
                               const CustomTextStyle(text: 'Technology'),
                               CustomTextForm(
-                                autovalidateMode: AutovalidateMode.onUserInteraction,
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
                                 readOnly: true,
                                 validator: InputValidator.technology,
                                 onTap: () {
@@ -304,21 +364,26 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return SearchableCheckboxListDialog(
-                                        options: const ['xamarin', 'android', 'iOS',
-                                          'flutter', 'kotlin'
+                                        options: const [
+                                          'Xamarin',
+                                          'Android',
+                                          'iOS',
+                                          'Flutter',
+                                          'Kotlin'
                                         ],
                                         selectedOptions: _selectedOptions,
-                                        onChanged: (List<String> selectedOptions) {
+                                        onChanged:
+                                            (List<String> selectedOptions) {
                                           setState(() {
                                             _selectedOptions = selectedOptions;
-                                            technologyController.text = _selectedOptions.join(', ');
+                                            technologyController.text =
+                                                _selectedOptions.join(', ');
                                           });
                                         },
                                       );
                                     },
                                   );
                                 },
-
                                 hintText: '',
                                 labelText: '',
                                 controller: technologyController,
@@ -326,14 +391,16 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                                     const Icon(Icons.keyboard_arrow_down),
                               ),
                               CheckboxListTile(
-                                title: Text('isAllocated'),
+                                title: const Text('Allocated'),
                                 value: _isChecked,
                                 onChanged: (bool? newValue) {
                                   setState(() {
+                                    print(_isChecked);
                                     _isChecked = newValue!;
                                   });
                                 },
-                                controlAffinity: ListTileControlAffinity.leading, // checkbox position
+                                controlAffinity: ListTileControlAffinity
+                                    .leading, // checkbox position
                               ),
                             ],
                           ),
@@ -344,26 +411,61 @@ class _EmployeeDetailsScreenState extends State<EmployeeDetailsScreen> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: CustomButton(
-                            onPressed: () {
-                               if (_formKey.currentState!.validate()) {
+                            onPressed: ()  async {
+                              if (_formKey.currentState!.validate()) {
                                 print(teamController.text);
                                 print(designationController.text);
                                 print(industryController.text);
                                 print('------ ischecked ${_isChecked}');
 
-                                bloc.add(SaveEmployeeDetailsEvent(
-                                    employeeName: employeeNameController.text,
-                                    emailAddress: emailAddressController.text,
-                                    phoneNumber: phoneNumberController.text,
-                                    team: teamController.text,
-                                    designation: designationController.text,
-                                    projectManager: projectManagerController.text,
-                                    industry: industryController.text,
-                                    technology: technologyController.text,
-                                    allocated: _isChecked == true ?0 : 1
-                                  ),
-                                );
-                               }
+                                print('========= SINGELTON ========== ${MFRIFlashSingleton.instance.isUpdated}');
+
+                                if(MFRIFlashSingleton.instance.isUpdated == true) {
+                                  Map<String, dynamic> row = {
+                                    DatabaseHelper.columnId: _selectedId,
+                                    DatabaseHelper.employeeName:  employeeNameController.text,
+                                    DatabaseHelper.employeeEmail: emailAddressController.text,
+                                    DatabaseHelper.employeePhoneNumber: phoneNumberController.text,
+                                    DatabaseHelper.employeeTeam: teamController.text,
+                                    DatabaseHelper.employeeDesignation: designationController.text,
+                                    DatabaseHelper.employeePM:  projectManagerController.text,
+                                    DatabaseHelper.employeeIndustry:  industryController.text,
+                                    DatabaseHelper.employeeTechnology:  technologyController.text,
+                                    DatabaseHelper.employeeAllocated : bloc.getNewEmployee!.allocated == 1 ? true :  false
+                                  };
+
+                                  final result = await dbHelper.updateEmployeeDetails(
+                                      row, DatabaseHelper.employeesDetailsTable);
+
+                                  print('----------- UPDATE EMPLOYEE');
+
+                                  if (result > 0) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('Employee details Updated')),
+                                    );
+                                    Navigator.pop(context);
+                                    Navigator.pushNamed(context, AppRoutes.employeeList);
+                                  }
+                                } else {
+                                  print('========SAVE NEW ');
+
+                                  bloc.add(SaveEmployeeDetailsEvent(
+                                        employeeName: employeeNameController.text,
+                                        emailAddress: emailAddressController.text,
+                                        phoneNumber: phoneNumberController.text,
+                                        team: teamController.text,
+                                        designation: designationController.text,
+                                        projectManager:
+                                        projectManagerController.text,
+                                        industry: industryController.text,
+                                        technology: technologyController.text,
+                                        allocated: _isChecked == true ? 1 : 0),
+                                  );
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, AppRoutes.employeeList);
+
+                                }
+                              }
                             },
                             text: 'Update',
                           ),
